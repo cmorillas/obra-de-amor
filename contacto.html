@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const destSelect = document.getElementById("form-dest");
     
     if (form && destSelect) {
+        const submitBtn = form.querySelector("button[type='submit']");
         // Obra de Amor emails
         const emails = {
             caceres: "obradeamorcaceres@gmail.com",
@@ -161,9 +162,84 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         
         form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
             const dest = destSelect.value;
             const targetEmail = emails[dest] || emails.caceres;
-            form.action = `https://formsubmit.co/${targetEmail}`;
+            
+            // Cambiar estado del botón
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = "Enviando...";
+            submitBtn.disabled = true;
+            
+            // Eliminar mensaje de error previo si existe
+            const prevError = form.querySelector(".form-error-message");
+            if (prevError) prevError.remove();
+            
+            // Recopilar datos en formato JSON
+            const formData = {
+                name: form.querySelector("#form-name").value,
+                email: form.querySelector("#form-email").value,
+                dest: destSelect.options[destSelect.selectedIndex].text,
+                _subject: form.querySelector("#form-subject").value,
+                message: form.querySelector("#form-message").value,
+                _captcha: "false"
+            };
+            
+            // Enviar vía AJAX (endpoint /ajax/ de FormSubmit)
+            fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Error en el envío");
+                }
+            })
+            .then(data => {
+                // Ocultar formulario con un desvanecimiento suave y mostrar mensaje de éxito
+                const wrapper = form.parentElement;
+                wrapper.style.opacity = 0;
+                wrapper.style.transition = "opacity 0.4s ease";
+                
+                setTimeout(() => {
+                    wrapper.innerHTML = `
+                        <div class="form-success-message" style="text-align: center; padding: 2.5rem 1.5rem; background: var(--celeste-50); border: 1px solid var(--celeste-200); border-radius: var(--radius-sm); animation: fadeIn 0.5s ease forwards;">
+                            <div class="success-icon" style="font-size: 3.5rem; color: var(--celeste-600); margin-bottom: 1rem; display: inline-block; line-height: 1;">✓</div>
+                            <h3 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--gray-900); font-size: 1.5rem;">¡Mensaje enviado!</h3>
+                            <p style="color: var(--gray-600); font-size: 0.95rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
+                                Gracias por escribir a la Obra de Amor. Tu mensaje ha sido enviado correctamente y te responderemos lo antes posible.
+                            </p>
+                        </div>
+                    `;
+                    wrapper.style.opacity = 1;
+                }, 400);
+            })
+            .catch(error => {
+                console.error("Error al enviar el formulario:", error);
+                
+                // Mostrar error al usuario
+                const errorDiv = document.createElement("div");
+                errorDiv.className = "form-error-message";
+                errorDiv.style.color = "#dc2626";
+                errorDiv.style.fontSize = "0.9rem";
+                errorDiv.style.marginTop = "1rem";
+                errorDiv.style.textAlign = "center";
+                errorDiv.style.fontWeight = "500";
+                errorDiv.textContent = "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.";
+                
+                form.appendChild(errorDiv);
+                
+                // Restaurar botón
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            });
         });
     }
 });
