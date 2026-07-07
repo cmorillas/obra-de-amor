@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Comunidad — Obra de Amor</title>
+    <meta name="description" content="Carisma, Espiritualidad y Vida Contemplativa en la clausura de la comunidad Obra de Amor.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+                <span class="logo-text">Obra de Amor</span>
+            </a>
+            
+            <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú de navegación">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="comunidad.html" class="nav-link active">La Comunidad</a></li>
+                    <li><a href="fundadora.html" class="nav-link">La Fundadora</a></li>
+                    <li><a href="rosario-7p.html" class="nav-link">Rosario 7P</a></li>
+                    <li><a href="laudate-mariam.html" class="nav-link">Laudate Mariam</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-image" style="background-image: url('assets/images/14-VIDA-CONTEMPLATIVA.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>La Comunidad</h1>
+            <p>Nuestra vida en clausura contemplativa, consagradas a Dios y a la humanidad.</p>
+        </div>
+    </section>
+
+    <!-- El Carisma -->
+    <section id="carisma">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3.5rem;">
+                <span class="subtitle" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.25em;">Don del Espíritu Santo</span>
+                <h2>Nuestro Carisma</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;">
+                <div>
+                    <blockquote style="font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; color: var(--text-primary); border-left: 2px solid var(--celeste); padding-left: 1.5rem; line-height: 1.8; margin-bottom: 2rem;">
+                        «Acogemos con mucha ilusión y gozo nuestro carisma, que consiste en tender a conseguir la perfección del amor por medio de una <strong>fidelidad absoluta y plena al Espíritu Santo</strong>, sin reservas, ofrendada para que todas las almas consagradas nos ofrendemos sin reservas.»
+                        <cite style="display: block; font-family: var(--font-heading); font-size: 0.75rem; font-style: normal; text-transform: uppercase; margin-top: 1rem; color: var(--text-light);">&mdash; Constituciones, Parte I-1</cite>
+                    </blockquote>
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">Cada miembro de nuestra Congregación ha de procurar hacer de su persona y vida un “SI” perpetuo al Señor en cuanto Él le vaya pidiendo, indicando, sugiriendo, entregándosele en fidelidad y amor indivisible, como ofrenda santa y agradable al Padre, por Jesucristo en el Espíritu Santo, tendiendo siempre a que ese sí sea cada vez más matizado y acabado.</p>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">Todas las miradas de la Congregación han de encontrarse en este punto y fundirse en este esfuerzo: <strong>dar a Dios hasta el último esfuerzo</strong>.</p>
+                </div>
+                <div>
+                    <img src="assets/images/03-CARISMA.jpg" alt="Comunidad Obra de Amor" style="width: 100%; border: 1px solid var(--border-color); padding: 8px; background-color: var(--bg-white);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Espiritualidad (Tabs) -->
+    <section class="alt" id="espiritualidad">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="subtitle" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.25em;">Cimientos del Silencio</span>
+                <h2>Nuestra Espiritualidad</h2>
+                <p class="subtitle" style="max-width: 600px; margin: 1rem auto 0;">Los pilares fundamentales en los que se apoya nuestra consagración cotidiana.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <ul class="tab-nav">
+                <li><button class="tab-link active" onclick="openTab(event, 'oracion')">Oración</button></li>
+                <li><button class="tab-link" onclick="openTab(event, 'silencio')">Silencio</button></li>
+                <li><button class="tab-link" onclick="openTab(event, 'adoracion')">Adoración</button></li>
+            </ul>
+
+            <!-- Tab content: Oración -->
+            <div id="oracion" class="tab-content active">
+                <div class="prose text-center">
+                    <p style="font-size: 1.1rem; font-family: var(--font-serif); font-style: italic; color: var(--text-primary); margin-bottom: 2rem;">«Como auténticas almas contemplativas, la oración debe ocupar un lugar primerísimo en nuestra vida. Todos los días dedicaremos al Señor tres horas de oración mental, en contacto sola y exclusivamente con Él.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">Lejos de ser esta silente oración una huida del mundo, en ella abarcamos todos los sufrimientos del mundo y rociamos de gracias divinas el mundo. Aparte de estas horas dedicadas íntegras al Señor, procuremos vivir “escondidas con Cristo en Dios” todas las horas del día.</p>
+                    <cite style="display: block; font-family: var(--font-heading); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light);">(Constituciones, Parte II-18, art. 1-5)</cite>
+                </div>
+            </div>
+
+            <!-- Tab content: Silencio -->
+            <div id="silencio" class="tab-content">
+                <div class="prose text-center">
+                    <p style="font-size: 1.1rem; font-family: var(--font-serif); font-style: italic; color: var(--text-primary); margin-bottom: 2rem;">«El silencio ha sido siempre utilizado por la Santa Madre Iglesia como uno de los pilares fundamentales para todas las Órdenes Religiosas. Y como un castillo defensor para la unión con Dios.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">El fin del silencio es hacer el vacío interior para llenarlo de Dios. Guardemos el mayor silencio, evitando toda palabra inútil, hablando sólo lo relacionado con nuestros trabajos y deberes, transformando nuestra casa en un templo.</p>
+                    <cite style="display: block; font-family: var(--font-heading); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light);">(Constituciones, Parte II-26, art. 1-6)</cite>
+                </div>
+            </div>
+
+            <!-- Tab content: Adoración -->
+            <div id="adoracion" class="tab-content">
+                <div class="prose text-center">
+                    <p style="font-size: 1.1rem; font-family: var(--font-serif); font-style: italic; color: var(--text-primary); margin-bottom: 2rem;">«Cuando nos acercamos al Sagrario parece como si dos brazos inmensos nos cogieran dentro. Como si dos alas maternas nos cubrieran de los pies a la cabeza.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">Consagramos nuestras horas a acompañar a Jesús Sacramentado. En la presencia de la Eucaristía encontramos la fuente de toda caridad y gracia para sostener el apostolado silencioso de la Iglesia.</p>
+                    <cite style="display: block; font-family: var(--font-heading); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light);">M. María Luisa de Jesús</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Vida Contemplativa y Testimonios -->
+    <section id="vida-contemplativa">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="subtitle" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.25em;">La Mirada de la Iglesia</span>
+                <h2>Vida Contemplativa</h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 4rem; align-items: center; margin-bottom: 4rem;">
+                <div>
+                    <img src="assets/images/14-VIDA-CONTEMPLATIVA.jpg" alt="Monasterio de Clausura" style="width: 100%; border: 1px solid var(--border-color); padding: 8px; background-color: var(--bg-white);">
+                </div>
+                <div>
+                    <p style="margin-bottom: 1.5rem;">La vida contemplativa ocupa y seguirá ocupando un puesto de honor en la Iglesia. Dedicada a la plegaria y al silencio, a la adoración y a la penitencia desde el claustro, <em>“vuestra vida está escondida con Cristo en Dios”</em> (Col 3,3).</p>
+                    <p style="margin-bottom: 1.5rem;">Los monasterios son centros de acogida cristiana para aquellas personas, sobre todo jóvenes, que van buscando con frecuencia una vida sencilla y transparente, en contraste con la que les ofrece la sociedad de consumo.</p>
+                    <p>El alma contemplativa, en el silencio, en la soledad, en la vida penitente y en la oración, busca unirse a Dios por el amor, sabiendo que en Dios encuentra siempre al prójimo con todas sus necesidades. Se separa de todo para unirse a todos.</p>
+                </div>
+            </div>
+
+            <div class="prose text-center" style="border-top: 1px solid var(--border-color); padding-top: 3rem; margin-top: 3rem;">
+                <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; color: var(--text-muted);">«Debajo de una corteza de prácticas religiosas aparentemente rutinarias, late el fuego sagrado de un ideal que no pasa y que no defrauda. Mujeres normales como todas las demás, han aprendido con inmenso gozo que solo Dios puede llenar el alma por completo.»</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Obra de Amor</h3>
+                    <p>Monasterio de vida contemplativa de clausura dedicado a la oración, la penitencia y la intercesión por el mundo, en fidelidad absoluta al Espíritu Santo.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="comunidad.html">La Comunidad</a></li>
+                        <li><a href="fundadora.html">La Fundadora</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="rosario-7p.html">Rosario 7P</a></li>
+                        <li><a href="laudate-mariam.html">Laudate Mariam</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Obra de Amor. Todos los derechos reservados. Sitio web seguro y estático.</p>
+                <p>Fidelidad al Espíritu Santo</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header & Tabs Scripts -->
+    <script>
+        // Header transparency scroll effect
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Tab selection logic
+        function openTab(evt, tabName) {
+            const tabContent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+
+            const tabLinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

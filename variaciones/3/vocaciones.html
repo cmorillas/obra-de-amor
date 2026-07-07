@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocaciones — Obra de Amor</title>
+    <meta name="description" content="¿Sientes la llamada a la vida contemplativa? Información sobre el discernimiento vocacional en Obra de Amor.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header id="site-header">
+        <div class="nav-bar">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/images/logo.png" alt="Obra de Amor">
+                <span>Obra de Amor</span>
+            </a>
+            <button class="mobile-toggle" id="menu-toggle" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="fundadora.html">La Fundadora</a></li>
+                <li><a href="rosario-7p.html">Rosario 7P</a></li>
+                <li><a href="laudate-mariam.html">Laudate Mariam</a></li>
+                <li><a href="vocaciones.html" class="active">Vocaciones</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" style="height: 60vh; min-height: 350px;">
+        <div class="hero-bg">
+            <img src="assets/images/14-VIDA-CONTEMPLATIVA.jpg" alt="Vida Contemplativa — Obra de Amor">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Vocaciones</h1>
+            <p>La llamada al claustro no es una huida, sino una inmersión profunda en el Corazón de Dios por el mundo.</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="fade-in">
+        <div class="prose">
+            <span class="section-label">Discernimiento</span>
+            <h2>¿Es esto para ti?</h2>
+
+            <p>La vocación contemplativa es un misterio de amor. Dios elige a algunas almas para que, separadas del mundo materialmente, estén presentes en el corazón mismo del mundo espiritualmente, sosteniéndolo con su oración silenciosa y su entrega total.</p>
+
+            <p>Si sientes una inquietud, una sed que nada en el mundo logra saciar, o un deseo de entregarte a Dios sin reservas, es posible que el Señor te esté llamando a una vida de mayor intimidad con Él.</p>
+
+            <blockquote>
+                <p>Las almas contemplativas son verdaderas columnas de apoyo de la Iglesia; sin ellas la actividad de la Iglesia carecería de fecundidad y fuerza interior.</p>
+                <cite>Constitución Apostólica Vultum Dei Quaerere</cite>
+            </blockquote>
+
+            <p>El discernimiento vocacional es un proceso. No tienes que tenerlo todo claro desde el principio. Solo se requiere sinceridad de corazón, amor a Dios y disposición para escuchar Su voluntad.</p>
+
+            <hr class="section-divider">
+        </div>
+    </section>
+
+    <!-- Contact form for vocations -->
+    <section class="cream fade-in">
+        <div class="prose">
+            <span class="section-label">Primer Paso</span>
+            <h2>Escríbenos con confianza</h2>
+
+            <p>Si deseas conocernos, hacer alguna pregunta, o simplemente necesitas que recemos por tu proceso de discernimiento, puedes escribirnos a través de este formulario confidencial. Te responderemos con cariño y sin ningún compromiso.</p>
+
+            <form action="https://formsubmit.co/obradeamor@gmail.com" method="POST" id="vocation-form" style="margin-top: 2rem;">
+                <input type="hidden" name="_subject" value="Nueva consulta sobre Vocaciones">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="voc-name">Nombre</label>
+                        <input type="text" id="voc-name" name="name" required placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="voc-age">Edad</label>
+                        <input type="number" id="voc-age" name="age" placeholder="Opcional">
+                    </div>
+                    <div class="form-group full">
+                        <label for="voc-email">Correo electrónico</label>
+                        <input type="email" id="voc-email" name="email" required placeholder="nombre@correo.com">
+                    </div>
+                    <div class="form-group full">
+                        <label for="voc-message">Mensaje o inquietud</label>
+                        <textarea id="voc-message" name="message" required placeholder="Cuéntanos un poco sobre ti y lo que sientes en tu corazón..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn">Enviar mensaje</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <span class="footer-name">Obra de Amor</span>
+            <ul class="footer-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="fundadora.html">La Fundadora</a></li>
+                <li><a href="rosario-7p.html">Rosario 7P</a></li>
+                <li><a href="laudate-mariam.html">Laudate Mariam</a></li>
+                <li><a href="vocaciones.html">Vocaciones</a></li>
+            </ul>
+            <div class="footer-copy">&copy; 2026 Obra de Amor. Monasterio de Clausura de Vida Contemplativa.</div>
+        </div>
+    </footer>
+
+    <script>
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 60));
+        const toggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        toggle.addEventListener('click', () => { toggle.classList.toggle('active'); navLinks.classList.toggle('active'); });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { toggle.classList.remove('active'); navLinks.classList.remove('active'); }));
+        const fades = document.querySelectorAll('.fade-in');
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.1 });
+        fades.forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

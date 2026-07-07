@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Legado — Obra de Amor</title>
+    <meta name="description" content="Historia, escritos, novena e intercesión de la Madre María Luisa de Jesús, fundadora del Monasterio Obra de Amor.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+                <span class="logo-text">Obra de Amor</span>
+            </a>
+            
+            <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú de navegación">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">El Claustro</a></li>
+                    <li><a href="la-senda.html" class="nav-link">La Senda</a></li>
+                    <li><a href="el-legado.html" class="nav-link active">El Legado</a></li>
+                    <li><a href="la-alianza.html" class="nav-link">La Alianza</a></li>
+                    <li><a href="contacto.html" class="nav-link">La Acogida</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Spacer for Header -->
+    <div style="height: 80px;"></div>
+
+    <!-- Intro -->
+    <section>
+        <div class="container text-center">
+            <span class="section-tag">Madre Fundadora</span>
+            <h2>El Legado de la Madre</h2>
+            <div class="prose" style="margin-top: 1.5rem;">
+                <p style="color: var(--text-secondary); font-size: 0.98rem;">
+                    Conoce la trayectoria terrenal de la Madre María Luisa de Jesús y del Corazón Inmaculado, su doctrina escrita sobre el abandono espiritual y las oraciones de su Novena.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Biografía & Escritos (Diary Tabs) -->
+    <section class="alt" id="diario-vida">
+        <div class="container">
+            
+            <ul class="tab-list">
+                <li><button class="tab-btn active" onclick="switchTab(event, 'tab-bio')">La Historia</button></li>
+                <li><button class="tab-btn" onclick="switchTab(event, 'tab-writings')">Los Escritos</button></li>
+            </ul>
+
+            <!-- Tab: Historia -->
+            <div id="tab-bio" class="tab-panel active">
+                <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <img src="assets/images/04-BIOGRAFIA-M.-MARÍA-LUISA.jpg" alt="Madre María Luisa" style="width: 100%; border: var(--border); padding: 8px; background-color: var(--bg-white); border-radius: var(--radius-lg); box-shadow: 0 10px 25px rgba(42,65,53,0.03);">
+                    </div>
+                    <div>
+                        <h3 style="font-style: italic; margin-bottom: 1.2rem; color: var(--sage);">Una senda marcada por la entrega</h3>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.2rem;">
+                            Nacida en Huelva (Zalamea la Real) en 1929. Ingresó joven en la vida monástica. Tras salir de la clausura original por severos problemas de salud y sufrir pruebas espirituales profundas de desierto, dedicó cuarenta años de dolor y oración solitaria a asentar las bases de la Obra de Amor.
+                        </p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.2rem;">
+                            En los años noventa vio fructificar su perseverancia al surgir las primeras vocaciones estables, lo que culminó con el reconocimiento diocesano de la nueva orden contemplativa en 1999.
+                        </p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary);">
+                            Víctima de una leucemia aguda, falleció con gozo en Cáceres en 2002. Su legado gira en torno a la docilidad al Espíritu Santo y el abandono incondicional en brazos de María Santísima.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Escritos -->
+            <div id="tab-writings" class="tab-panel">
+                <div class="grid-cols-3">
+                    
+                    <div class="organic-card" style="border-top: 2px solid var(--gold);">
+                        <span class="section-tag" style="color: var(--sage);">Libro: Darse</span>
+                        <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.05rem; line-height: 1.7; color: var(--text-primary);">
+                            «Cuando nos acercamos al Sagrario parece como si dos brazos inmensos nos cogieran dentro. Como si dos alas maternas nos cubrieran de los pies a la cabeza. Como si dos fortísimas murallas nos defendieran de todas las flechas.»
+                        </p>
+                    </div>
+
+                    <div class="organic-card" style="border-top: 2px solid var(--sage);">
+                        <span class="section-tag" style="color: var(--sage);">Libro: Consumarse</span>
+                        <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.05rem; line-height: 1.7; color: var(--text-primary);">
+                            «Navega en el Mar de Dios a ojos cerrados. Húndete en Él. En ese Eterno Presente que está en tu alma. Serás muy feliz si aprendes a vivir en esta navegación divina y sabes permanecer sereno.»
+                        </p>
+                    </div>
+
+                    <div class="organic-card" style="border-top: 2px solid var(--gold);">
+                        <span class="section-tag" style="color: var(--sage);">Libro: Ella</span>
+                        <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.05rem; line-height: 1.7; color: var(--text-primary);">
+                            «La Virgen. Ella es la Guardiana de los Secretos de la Trinidad. La Abandonada a las iniciativas divinas. La Silenciosa Morenita que sabía esperar las intervenciones de Dios.»
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- La Novena (Acordeón Orgánico) -->
+    <section id="novena-seccion">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3.5rem;">
+                <span class="section-tag">Oración y Petición</span>
+                <h2>Novena de Intercesión</h2>
+                <p class="subtitle" style="max-width: 600px; margin: 1rem auto 0; font-size: 0.95rem;">Oración privada recomendada para pedir la intercesión de la Fundadora.</p>
+            </div>
+
+            <div class="accordion-wrapper" style="max-width: 800px; margin: 0 auto;">
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Oración de la Novena</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.15rem; line-height: 1.8; text-align: center; color: var(--text-primary); margin-bottom: 2rem;">
+                                «Santísima Trinidad: Padre Omnipotente, Jesús, Verbo Encarnado, Espíritu Santo, Eterna Luz, que por tu gran misericordia has querido dejarnos por medio de la Madre María Luisa de Jesús y del Corazón Inmaculado un modelo de fe inquebrantable y de abandono total, y un mensaje de amor, de llama y de una fidelidad absoluta; haz que el ejemplo de sus virtudes nos impulse a una vida de mayor entrega a Ti.»
+                            </p>
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.15rem; line-height: 1.8; text-align: center; color: var(--text-primary); margin-bottom: 2rem;">
+                                «Dígnate, si es tu voluntad, hacer brillar en la Iglesia su vida heroica, y concédenos por su intercesión esta gracia que ardientemente te suplicamos. Amén.»
+                            </p>
+                            <p style="text-align: center; font-size: 0.85rem; color: var(--text-light); font-weight: 500;">(Rezar Padrenuestro, Ave María y Gloria)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Imagen y Aprobación</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content" style="text-align: center;">
+                            <img src="assets/images/06-PARA-LA-NOVENA.jpg" alt="Novena de la Madre" style="max-width: 240px; margin: 0 auto 1.5rem; border: var(--border); padding: 5px; background-color: var(--bg-white); border-radius: var(--radius-lg);">
+                            <p style="font-size: 0.85rem; color: var(--text-light);">Novena autorizada para la devoción y rezo privado.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Obra de Amor</h3>
+                    <p>Monasterio contemplativo de clausura. Consagradas al silencio fecundo, el Oficio Divino y la intercesión incesante por la Iglesia y el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>El Claustro</h4>
+                    <ul>
+                        <li><a href="la-senda.html">La Senda</a></li>
+                        <li><a href="el-legado.html">El Legado</a></li>
+                        <li><a href="la-alianza.html">La Alianza</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="la-alianza.html#rosario-virtual">Rosario 7P</a></li>
+                        <li><a href="la-alianza.html#laudate-mariam">Laudate Mariam</a></li>
+                        <li><a href="contacto.html">La Acogida</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Obra de Amor. Monasterio de Clausura Contemplativa. Sitio seguro y estático.</p>
+                <p>Jardín Contemplativo</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header, Tabs & Accordion Scripts -->
+    <script>
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Tab switcher
+        function switchTab(evt, tabName) {
+            const panels = document.getElementsByClassName("tab-panel");
+            for (let i = 0; i < panels.length; i++) {
+                panels[i].classList.remove("active");
+            }
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Accordion toggle
+        function toggleAccordion(headerElement) {
+            const item = headerElement.parentElement;
+            const body = item.querySelector('.accordion-body');
+            const isCurrentlyActive = item.classList.contains('active');
+            
+            const items = document.querySelectorAll('.accordion-item');
+            items.forEach(el => {
+                el.classList.remove('active');
+                el.querySelector('.accordion-body').style.maxHeight = null;
+            });
+            
+            if (!isCurrentlyActive) {
+                item.classList.add('active');
+                body.style.maxHeight = body.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>

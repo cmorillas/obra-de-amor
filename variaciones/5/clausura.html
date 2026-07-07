@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Clausura — Obra de Amor</title>
+    <meta name="description" content="Carisma, pilares espirituales y el horario diario Ora et Labora de la clausura de Obra de Amor.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+                <span class="logo-text">Obra de Amor</span>
+            </a>
+            
+            <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú de navegación">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="clausura.html" class="nav-link active">La Clausura</a></li>
+                    <li><a href="obrador.html" class="nav-link">El Obrador</a></li>
+                    <li><a href="hospederia.html" class="nav-link">Hospedería</a></li>
+                    <li><a href="fundadora.html" class="nav-link">La Fundadora</a></li>
+                    <li><a href="plegaria.html" class="nav-link">Plegaria</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-image" style="background-image: url('assets/images/03-CARISMA.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>La Clausura</h1>
+            <p>El misterio de una vida oculta con Cristo en Dios. Silencio, fraternidad y oración.</p>
+        </div>
+    </section>
+
+    <!-- El Carisma -->
+    <section class="white" id="carisma">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="section-tag">Nuestra Vocación</span>
+                <h2>El Carisma de la Obra</h2>
+            </div>
+            
+            <div class="prose">
+                <p style="font-size: 1.15rem; font-family: var(--font-serif); font-style: italic; color: var(--text-dark); border-left: 3px solid var(--terracota); padding-left: 2rem; margin-bottom: 2.5rem; line-height: 1.8;">
+                    «Consiste en tender a conseguir la perfección del amor por medio de una fidelidad absoluta y plena al Espíritu Santo, sin reservas, ofrendada para que todas las almas consagradas nos ofrendemos sin reservas.»
+                    <span style="display: block; font-family: var(--font-sans); font-size: 0.75rem; font-style: normal; text-transform: uppercase; margin-top: 1rem; color: var(--text-light); font-weight:600;">&mdash; Constituciones, Parte I-1</span>
+                </p>
+                <p>Nuestra entrega se modela bajo el "sí" o el "hágase" incondicional de la Santísima Virgen María. Cada hermana de la comunidad busca secundar con amor y docilidad cada una de las inspiraciones y llamadas del Espíritu Divino en los quehaceres más pequeños y en la plegaria.</p>
+                <p>Nuestra misión no es una desconexión de la Iglesia, sino un ensanchamiento del alma: nos encerramos en el monasterio para abrir el corazón a las necesidades, a los dolores y a las esperanzas de cada alma sedienta en la tierra.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Espiritualidad (Tabs) -->
+    <section id="espiritualidad">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="section-tag">Pilares</span>
+                <h2>Dimensiones Espirituales</h2>
+                <p class="subtitle" style="max-width: 600px; margin: 1rem auto 0;">Los cimientos que sostienen el templo de nuestra vida cotidiana.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <ul class="tab-list">
+                <li><button class="tab-btn active" onclick="showTab(event, 'pilar-oracion')">Oración Mental</button></li>
+                <li><button class="tab-btn" onclick="showTab(event, 'pilar-silencio')">Gran Silencio</button></li>
+                <li><button class="tab-btn" onclick="showTab(event, 'pilar-adoracion')">Presencia Real</button></li>
+            </ul>
+
+            <!-- Tab: Oración -->
+            <div id="pilar-oracion" class="tab-panel active">
+                <div class="framed-box prose text-center">
+                    <p style="font-size: 1.2rem; font-family: var(--font-serif); font-style: italic; color: var(--text-dark); margin-bottom: 2rem;">«Dedicaremos al Señor tres horas de oración mental, en contacto sola y exclusivamente con Él.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        La oración contemplativa no es un ejercicio intelectual, sino una mirada amorosa, una escucha silenciosa y una correspondencia al amor de Dios. Abarcamos en este coloquio íntimo todas las necesidades de la Iglesia, de los sacerdotes y de los que sufren en el cuerpo o en el espíritu.
+                    </p>
+                    <cite style="display: block; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light); font-weight:600;">Constituciones, II-18</cite>
+                </div>
+            </div>
+
+            <!-- Tab: Silencio -->
+            <div id="pilar-silencio" class="tab-panel">
+                <div class="framed-box prose text-center">
+                    <p style="font-size: 1.2rem; font-family: var(--font-serif); font-style: italic; color: var(--text-dark); margin-bottom: 2rem;">«El fin del silencio es hacer el vacío interior para llenarlo de Dios.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        Guardamos un profundo recogimiento exterior para cultivar la música callada de la presencia divina en el alma. Hablamos solo lo necesario para el trabajo y el deber, transformando nuestra casa en un sagrario.
+                    </p>
+                    <cite style="display: block; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light); font-weight:600;">Constituciones, II-26</cite>
+                </div>
+            </div>
+
+            <!-- Tab: Adoración -->
+            <div id="pilar-adoracion" class="tab-panel">
+                <div class="framed-box prose text-center">
+                    <p style="font-size: 1.2rem; font-family: var(--font-serif); font-style: italic; color: var(--text-dark); margin-bottom: 2rem;">«Ahí estará siempre. Dándonos Su Corazón traspasado sin pedirnos a cambio más que el corazón nuestro.»</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        La Adoración al Santísimo Sacramento expuesto en la Custodia es la cumbre de nuestro día. Intercedemos por la conversión de los pecadores y reparamos por los ultrajes que recibe el Corazón Eucarístico de Jesús.
+                    </p>
+                    <cite style="display: block; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-light); font-weight:600;">Madre María Luisa</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horarios (Ora et Labora) -->
+    <section class="white" id="horario">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="section-tag">Ora et Labora</span>
+                <h2>Horario de la Comunidad</h2>
+                <p class="subtitle" style="max-width: 600px; margin: 1rem auto 0;">Una jornada consagrada enteramente a la alabanza y la caridad en el trabajo.</p>
+            </div>
+
+            <div class="hours-table" style="max-width: 900px; margin: 0 auto;">
+                
+                <div class="hour-item">
+                    <span class="hour-time">05:30</span>
+                    <span class="hour-label">Levantamiento y Oficio Divino</span>
+                    <span class="hour-meta">El inicio de la vigilia en el coro.</span>
+                </div>
+                
+                <div class="hour-item">
+                    <span class="hour-time">07:00</span>
+                    <span class="hour-label">Santa Misa y Laudes</span>
+                    <span class="hour-meta">El sacrificio Redentor y oración litúrgica matutina.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">08:00</span>
+                    <span class="hour-label">Lectio Divina y Oración</span>
+                    <span class="hour-meta">Meditar la Palabra de Dios en el silencio del coro.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">09:30</span>
+                    <span class="hour-label">Trabajo Manual</span>
+                    <span class="hour-meta">El obrador de repostería, limpieza y mantenimiento.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">12:30</span>
+                    <span class="hour-label">Sexta y Almuerzo</span>
+                    <span class="hour-meta">Comida en el refectorio con lectura espiritual.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">13:30</span>
+                    <span class="hour-label">Recreación Comunitaria</span>
+                    <span class="hour-meta">Fraternidad, costura y diálogo sencillo.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">17:30</span>
+                    <span class="hour-label">Exposición y Vísperas</span>
+                    <span class="hour-meta">Adoración eucarística solemne e intercesión vespertina.</span>
+                </div>
+
+                <div class="hour-item">
+                    <span class="hour-time">21:30</span>
+                    <span class="hour-label">Completas y Descanso</span>
+                    <span class="hour-meta">El inicio del Gran Silencio nocturno.</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflexión final -->
+    <section>
+        <div class="container text-center">
+            <div class="prose">
+                <span class="section-tag">El Desierto Contemplativo</span>
+                <p style="font-size: 1.25rem; font-family: var(--font-serif); line-height: 1.9; color: var(--text-dark);">
+                    «La vida contemplativa es como el corazón en el cuerpo humano: no se ve, está escondido, pero mantiene vivas todas las extremidades y el pulso del apostolado de la Iglesia entera.»
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Obra de Amor</h3>
+                    <p>Monasterio contemplativo de clausura. Dedicadas a la plegaria litúrgica, la adoración eucarística, el silencio reparador y el trabajo manual, sustentadas en la providencia de Dios.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Clausura</h4>
+                    <ul>
+                        <li><a href="clausura.html">Carisma y Espiritualidad</a></li>
+                        <li><a href="clausura.html#horario">Horarios de Liturgia</a></li>
+                        <li><a href="fundadora.html">Madre María Luisa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Compartir</h4>
+                    <ul>
+                        <li><a href="obrador.html">Pastelería del Torno</a></li>
+                        <li><a href="hospederia.html">Hospedería de Retiros</a></li>
+                        <li><a href="plegaria.html">Compromiso Rosario 7P</a></li>
+                        <li><a href="contacto.html">Contacto y Sedes</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Obra de Amor. Monasterio de Clausura Contemplativa. Sitio seguro y estático.</p>
+                <p>Ora et Labora</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header, Mobile Toggle and Tab script -->
+    <script>
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        function showTab(evt, tabId) {
+            const panels = document.getElementsByClassName("tab-panel");
+            for (let i = 0; i < panels.length; i++) {
+                panels[i].classList.remove("active");
+            }
+            
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

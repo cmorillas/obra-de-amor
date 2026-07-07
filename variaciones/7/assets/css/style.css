@@ -1,0 +1,990 @@
+/* ============================================================
+   VARIACIÓN 7: JARDÍN CONTEMPLATIVO (EL SENDERO DEL SILENCIO)
+   Estética Orgánica, Fresca y Natural. Tonos Salvia, Lino y Oro.
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+/* --- Design Tokens --- */
+:root {
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Work Sans', system-ui, -apple-system, sans-serif;
+
+    --bg-main: #f5f5f3;        /* Soft Linen Cream */
+    --bg-white: #fbfbfa;       /* Stone White */
+    --bg-card: rgba(251, 251, 250, 0.9);
+    
+    --text-primary: #1c2721;   /* Deep Charcoal-Forest */
+    --text-secondary: #526359; /* Muted Sage Gray */
+    --text-light: #7e9185;
+    
+    --sage: #2a4135;           /* Rich Sage Olive */
+    --sage-light: #d8e2dc;     /* Pale Mint/Linen */
+    --gold: #c39c57;           /* Autumn Leaf Gold */
+    --gold-light: #f6ebd8;     /* Warm Creamy Gold */
+    
+    --border: 1px solid rgba(42, 65, 53, 0.08);
+    --border-strong: 1px solid rgba(42, 65, 53, 0.16);
+    
+    --layout-width: 1100px;
+    --prose-width: 780px;
+    --gap-section: 6.5rem;
+    
+    --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --radius-lg: 16px;
+    --radius-md: 8px;
+    --radius-sm: 4px;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--bg-main);
+}
+
+body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    color: var(--text-secondary);
+    background-color: var(--bg-main);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--sage);
+    text-decoration: none;
+    transition: var(--transition);
+}
+a:hover {
+    color: var(--gold);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 3.8rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+}
+
+h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.section-tag {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+
+.text-center { text-align: center; }
+
+/* --- Layout Elements --- */
+.container {
+    max-width: var(--layout-width);
+    margin: 0 auto;
+    padding: 0 2.5rem;
+}
+
+.prose {
+    max-width: var(--prose-width);
+    margin: 0 auto;
+}
+
+section {
+    padding: var(--gap-section) 0;
+    position: relative;
+}
+
+section.alt {
+    background-color: var(--bg-white);
+}
+
+/* Organic curved card */
+.organic-card {
+    background: var(--bg-card);
+    border: var(--border);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(42, 65, 53, 0.03);
+    transition: var(--transition);
+}
+
+.organic-card:hover {
+    border-color: rgba(42, 65, 53, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(42, 65, 53, 0.05);
+}
+
+/* --- Header / Navigation --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(245, 245, 243, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: var(--border);
+    transition: var(--transition);
+}
+
+header.scrolled {
+    padding: 0.2rem 0;
+    background-color: rgba(245, 245, 243, 0.95);
+    box-shadow: 0 5px 25px rgba(42, 65, 53, 0.04);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--layout-width);
+    margin: 0 auto;
+    padding: 1.8rem 2.5rem;
+    transition: var(--transition);
+}
+
+header.scrolled .nav-container {
+    padding: 1.1rem 2.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.logo img {
+    height: 36px;
+    width: auto;
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.2rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    position: relative;
+    padding: 0.3rem 0;
+    transition: var(--transition);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--sage);
+    transition: var(--transition);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    z-index: 1100;
+}
+
+.mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--text-primary);
+    margin: 5px 0;
+    transition: var(--transition);
+}
+
+/* --- Hero Banner (Luz filtrada) --- */
+.hero-banner {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-white);
+    overflow: hidden;
+    margin-top: 80px;
+    border-bottom: var(--border);
+}
+
+.hero-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 30%, rgba(205, 162, 91, 0.08) 0%, rgba(245, 245, 243, 0) 70%),
+                linear-gradient(135deg, rgba(216, 226, 220, 0.4) 0%, rgba(245, 245, 243, 0) 100%);
+    z-index: 1;
+}
+
+.hero-leaf-graphic {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35%;
+    max-width: 400px;
+    opacity: 0.15;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 720px;
+    padding: 0 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--sage);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+@keyframes slideUpFade {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Interactive "Semillas de Sabiduría" --- */
+.seed-box {
+    background-color: var(--bg-white);
+    border: var(--border-strong);
+    padding: 4rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 3rem;
+}
+
+.seed-box::before {
+    content: '“';
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    font-family: var(--font-heading);
+    font-size: 12rem;
+    color: rgba(42, 65, 53, 0.03);
+    line-height: 1;
+}
+
+.seed-quote {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.45rem;
+    color: var(--sage);
+    line-height: 1.7;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+.seed-author {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-top: 1.5rem;
+}
+
+.seed-btn-row {
+    margin-top: 2.5rem;
+}
+
+.seed-btn {
+    background: none;
+    border: 1px solid var(--gold);
+    padding: 0.5rem 1.2rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--sage);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.seed-btn:hover {
+    background-color: var(--gold);
+    color: var(--bg-white);
+    box-shadow: 0 5px 15px rgba(205, 162, 91, 0.2);
+}
+
+/* --- Vertical Sendero Spiritual Timeline --- */
+.sendero-wrapper {
+    position: relative;
+    max-width: 900px;
+    margin: 4rem auto 0;
+    padding-left: 3rem;
+}
+
+.sendero-axis {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--sage) 0%, var(--sage-light) 100%);
+}
+
+.sendero-step {
+    position: relative;
+    margin-bottom: 5rem;
+}
+
+.sendero-step:last-child {
+    margin-bottom: 0;
+}
+
+.sendero-dot {
+    position: absolute;
+    left: -40px;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--bg-main);
+    border: 2px solid var(--sage);
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sendero-dot::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.sendero-step.active .sendero-dot::after {
+    opacity: 1;
+}
+
+.sendero-card {
+    background-color: var(--bg-white);
+    border: var(--border);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+    box-shadow: 0 10px 25px rgba(42, 65, 53, 0.02);
+}
+
+.sendero-step.active .sendero-card {
+    border-color: rgba(42, 65, 53, 0.2);
+    box-shadow: 0 15px 35px rgba(42, 65, 53, 0.05);
+}
+
+.sendero-num {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Leaf Beads Virtual Rosary --- */
+.rosary-leaf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+.rosary-leaves-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    background: var(--bg-white);
+    border: var(--border);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+}
+
+.leaf-bead {
+    width: 58px;
+    height: 58px;
+    border: 1px solid var(--text-light);
+    border-radius: 50% 0 50% 0; /* Petal/Leaf curve */
+    transform: rotate(45deg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    transition: var(--transition);
+}
+
+.leaf-bead span {
+    transform: rotate(-45deg); /* Counter-rotate text */
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.leaf-bead:hover,
+.leaf-bead.active {
+    background-color: rgba(42, 65, 53, 0.08);
+    border-color: var(--sage);
+    box-shadow: 0 0 12px rgba(42, 65, 53, 0.15);
+}
+
+.leaf-bead.active {
+    background-color: var(--sage);
+    border-color: var(--sage);
+}
+
+.leaf-bead.active span {
+    color: var(--bg-white);
+}
+
+.rosary-text-pane {
+    background: var(--bg-white);
+    border: var(--border);
+    padding: 3.5rem;
+    border-radius: var(--radius-lg);
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* --- Clean Modern Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border-radius: 100px;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid var(--sage);
+}
+
+.btn-primary {
+    background-color: var(--sage);
+    color: var(--bg-white);
+}
+
+.btn-primary:hover {
+    background-color: #3b5b4a;
+    border-color: #3b5b4a;
+    box-shadow: 0 8px 20px rgba(42, 65, 53, 0.15);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--sage);
+}
+
+.btn-outline:hover {
+    background-color: rgba(42, 65, 53, 0.04);
+}
+
+/* --- Grid Utilities --- */
+.grid-cols-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* --- Tab System (Legado/Diary) --- */
+.tab-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    border-bottom: var(--border);
+    margin-bottom: 3.5rem;
+    gap: 1rem;
+}
+
+.tab-btn {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-style: italic;
+    padding: 0.8rem 2rem;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: transparent;
+    transition: var(--transition);
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    color: var(--sage);
+}
+
+.tab-btn.active::after {
+    background-color: var(--sage);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Accordions (Novena) --- */
+.accordion-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.accordion-item {
+    background-color: var(--bg-white);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.accordion-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordion-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-style: italic;
+}
+
+.accordion-icon {
+    font-size: 1.3rem;
+    color: var(--gold);
+    transition: var(--transition);
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.accordion-content {
+    padding: 0 2rem 2rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.accordion-item.active .accordion-body {
+    max-height: 800px;
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(45deg);
+}
+
+/* --- Clean Forms --- */
+.form-organic {
+    background-color: var(--bg-white);
+    border: var(--border);
+    padding: 3.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(42, 65, 53, 0.02);
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    border: var(--border-strong);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--sage);
+    background-color: var(--bg-white);
+    box-shadow: 0 0 8px rgba(42, 65, 53, 0.05);
+}
+
+.form-control::placeholder {
+    color: var(--text-light);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* --- Laudate List (Salvia style) --- */
+.search-bar-organic {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    background-color: var(--bg-white);
+    border: var(--border);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    flex-wrap: wrap;
+}
+
+.search-input-organic {
+    flex: 1;
+    min-width: 250px;
+}
+
+.filter-select-organic {
+    width: 200px;
+}
+
+.members-ol-organic {
+    padding-left: 2rem;
+    line-height: 2.2;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.members-ol-organic li {
+    margin-bottom: 0.6rem;
+    border-bottom: 1px dotted rgba(42,65,53,0.1);
+    padding-bottom: 0.4rem;
+}
+
+.members-ol-organic li strong {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-style: normal;
+    color: var(--text-primary);
+}
+
+.members-ol-organic li span.loc {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-style: normal;
+    color: var(--text-secondary);
+}
+
+.members-ol-organic li span.status {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-style: normal;
+    color: var(--gold);
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+
+/* --- Simulated Audio Player (Light Organic) --- */
+.audio-player-light {
+    background: var(--sage-light);
+    border: var(--border);
+    padding: 1.5rem 2rem;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.audio-play-btn-light {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--sage);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-white);
+    transition: var(--transition);
+}
+
+.audio-play-btn-light:hover {
+    transform: scale(1.05);
+    background-color: #3b5b4a;
+}
+
+.audio-timeline-light {
+    height: 2px;
+    background-color: rgba(42, 65, 53, 0.1);
+    position: relative;
+    margin-top: 0.4rem;
+    border-radius: 1px;
+}
+
+.audio-progress-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--sage);
+    border-radius: 1px;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--sage);
+    color: var(--sage-light);
+    padding: 5.5rem 0 3rem;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+}
+
+footer h3, footer h4 {
+    font-family: var(--font-heading);
+    color: var(--bg-white);
+    font-style: italic;
+}
+
+footer a {
+    color: var(--sage-light);
+}
+
+footer a:hover {
+    color: var(--gold);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3.5rem;
+}
+
+.footer-brand h3 {
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+}
+
+.footer-brand p {
+    line-height: 1.7;
+    max-width: 400px;
+}
+
+.footer-col h4 {
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(216, 226, 220, 0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: rgba(216, 226, 220, 0.5);
+}
+
+/* --- Responsive Adaptations --- */
+@media (max-width: 992px) {
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2rem; }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .rosary-leaf-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--bg-main);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        z-index: 1050;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .nav-link {
+        font-size: 1.1rem;
+        padding: 0.8rem 0;
+    }
+    
+    .mobile-toggle {
+        display: block;
+    }
+    
+    .mobile-toggle.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    
+    .mobile-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .mobile-toggle.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+    
+    .hero-banner {
+        height: 60vh;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+}

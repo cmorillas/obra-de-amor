@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espiritualidad — Obra de Amor</title>
+    <meta name="description" content="Los pilares de la espiritualidad contemplativa en Obra de Amor: Oración, Silencio, Eucaristía y amor a la Virgen.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+                <span class="logo-text">Obra de Amor</span>
+            </a>
+            
+            <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú de navegación">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="carisma.html" class="nav-link">Carisma</a></li>
+                    <li><a href="espiritualidad.html" class="nav-link active">Espiritualidad</a></li>
+                    <li><a href="fundadora.html" class="nav-link">La Fundadora</a></li>
+                    <li><a href="rosario-7p.html" class="nav-link">Rosario 7P</a></li>
+                    <li><a href="laudate-mariam.html" class="nav-link">Laudate Mariam</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-image" style="background-image: url('assets/images/07-ORACIÓN.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Espiritualidad</h1>
+            <p>Los cuatro pilares de nuestra vida interior. Consagradas al Amado en fe y abandono.</p>
+        </div>
+    </section>
+
+    <!-- Pestañas de Espiritualidad -->
+    <section class="alt" id="seccion-pilares">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 4rem;">
+                <span class="section-tag">Pilares de Clausura</span>
+                <h2>Nuestra Vida Interior</h2>
+            </div>
+
+            <!-- Tab Buttons -->
+            <ul class="tab-list">
+                <li><button class="tab-btn active" onclick="switchTab(event, 'tab-oracion')">Oración y Alabanza</button></li>
+                <li><button class="tab-btn" onclick="switchTab(event, 'tab-silencio')">Silencio</button></li>
+                <li><button class="tab-btn" onclick="switchTab(event, 'tab-adoracion')">Adoración Eucarística</button></li>
+                <li><button class="tab-btn" onclick="switchTab(event, 'tab-maria')">Amor a María</button></li>
+            </ul>
+
+            <!-- Tab: Oración -->
+            <div id="tab-oracion" class="tab-panel active">
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <div class="glass-card" style="border-top: 2px solid var(--celeste);">
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; color: var(--text-white); line-height: 1.8; margin-bottom: 1.5rem;">
+                                «Como auténticas almas contemplativas, la oración debe ocupar un lugar primerísimo en nuestra vida. Todos los días dedicaremos al Señor tres horas de oración mental, en contacto sola y exclusivamente con Él.»
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7;">
+                                Si nuestro carisma es un totalizado don total, nunca podrá este llevarse a su plenitud sin una vida profunda de oración. Pongamos en ella toda la buena voluntad y atención que esté a nuestro alcance.
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7; margin-top: 1rem;">
+                                Lejos de ser esta silente oración una huida del mundo, en ella abarcamos todos los sufrimientos del mundo y rociamos de gracias divinas el mundo. Aparte de estas horas dedicadas íntegras al Señor, procuremos vivir “escondidas con Cristo en Dios” todas las horas del día.
+                            </p>
+                            <cite style="display: block; font-family: var(--font-sub); font-size: 0.72rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-muted); font-weight: 600;">(Constituciones, Parte II-18, art. 1-5)</cite>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="assets/images/07-ORACIÓN.jpg" alt="Oración Mental" style="width: 100%; border: var(--border); padding: 8px; background-color: var(--bg-card); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Silencio -->
+            <div id="tab-silencio" class="tab-panel">
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <div class="glass-card" style="border-top: 2px solid var(--celeste);">
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; color: var(--text-white); line-height: 1.8; margin-bottom: 1.5rem;">
+                                «El silencio ha sido siempre utilizado por la Santa Madre Iglesia como uno de los pilares fundamentales para todas las Órdenes Religiosas. Y como un castillo defensor para la unión con Dios.»
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7;">
+                                El fin del silencio es hacer el vacío interior para llenarlo de Dios. Guardemos el mayor silencio, evitando toda palabra inútil, hablando sólo lo relacionado con nuestros trabajos y deberes, transformando nuestra casa en un templo de paz.
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7; margin-top: 1rem;">
+                                Aprendamos a callar las lenguas para que hablen las almas. Este silencio no es vacío, sino plenitud y acogida amorosa al Verbo divino.
+                            </p>
+                            <cite style="display: block; font-family: var(--font-sub); font-size: 0.72rem; text-transform: uppercase; margin-top: 1.5rem; color: var(--text-muted); font-weight: 600;">(Constituciones, Parte II-26, art. 1-6)</cite>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="assets/images/14-VIDA-CONTEMPLATIVA.jpg" alt="Silencio en Clausura" style="width: 100%; border: var(--border); padding: 8px; background-color: var(--bg-card); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Adoración -->
+            <div id="tab-adoracion" class="tab-panel">
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <div class="glass-card" style="border-top: 2px solid var(--celeste);">
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; color: var(--text-white); line-height: 1.8; margin-bottom: 1.5rem;">
+                                «Nuestra vida eucarística gira en torno a la Santa Misa y al acompañamiento a Jesús Sacramentado expuesto en el altar.»
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7;">
+                                La Adoración Eucarística permanente es un pilar central en nuestra misión contemplativa de reparación. Llevamos las intenciones de los pecadores y de toda la Iglesia ante la custodia divina en el silencio del templo.
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7; margin-top: 1rem;">
+                                Cuando nos postramos en su Presencia, el tiempo parece suspenderse y el sagrario se transforma en un canal infinito de amor que fluye hacia el mundo entero.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="assets/images/09-ADORACION.jpg" alt="Adoración Eucarística" style="width: 100%; border: var(--border); padding: 8px; background-color: var(--bg-card); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: María -->
+            <div id="tab-maria" class="tab-panel">
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <div class="glass-card" style="border-top: 2px solid var(--celeste);">
+                            <p style="font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; color: var(--text-white); line-height: 1.8; margin-bottom: 1.5rem;">
+                                «De todos los privilegios de la Madre de Jesús no sabríamos cuál nos fascina más… ¿Cuál es para Ti la más grande? Y nos parece que la delicada voz de una Jovencita nos contesta: “Ser la esclava del Señor”.»
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7;">
+                                El amor filial a la Santísima Virgen María configura nuestra vida consagrada. En su hágase e incondicional sumisión a los designios del Padre encontramos la forma perfecta de vivir la fidelidad absoluta al Espíritu Santo.
+                            </p>
+                            <p style="font-size: 0.95rem; color: var(--text-silver); line-height: 1.7; margin-top: 1rem;">
+                                A Ella le confiamos nuestra vocación, consagradas como sus esclavas e instrumentos dóciles para que a través del rezo diario de su rosario sea más conocida y amada.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="assets/images/10-AMOR-A-MARÍA.jpg" alt="Amor a María" style="width: 100%; border: var(--border); padding: 8px; background-color: var(--bg-card); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Simulated Gregorian Chant Player (Moved from Santuario to Espiritualidad for better integration) -->
+    <section>
+        <div class="container">
+            <div class="glass-card text-center" style="max-width: 800px; margin: 0 auto; border-top: 2px solid var(--gold);">
+                <span class="section-tag" style="color: var(--gold);">Liturgia del Coro</span>
+                <h3>Cantos del Oficio Divino</h3>
+                <p style="font-size: 0.92rem; color: var(--text-silver); margin: 1rem auto 2rem; max-width: 500px;">
+                    Escucha una muestra del canto gregoriano rezado por las monjas contemplativas en la delegación del Monasterio.
+                </p>
+                
+                <div class="audio-player" style="max-width: 550px; margin: 0 auto;">
+                    <button class="audio-play-btn" id="play-btn" aria-label="Reproducir">
+                        <span id="play-icon" style="font-size: 1.1rem; line-height: 1;">&#9658;</span>
+                    </button>
+                    <div class="audio-track-info" style="text-align: left;">
+                        <div class="audio-title" id="track-title">Veni Creator Spiritus</div>
+                        <div class="audio-artist">Coro Obra de Amor</div>
+                        <div class="audio-timeline">
+                            <div class="audio-progress" id="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Obra de Amor</h3>
+                    <p>Monasterio contemplativo de clausura. Consagradas al silencio fecundo, el Oficio Divino y la intercesión incesante por la Iglesia y el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Clausura</h4>
+                    <ul>
+                        <li><a href="carisma.html">El Carisma</a></li>
+                        <li><a href="espiritualidad.html">La Espiritualidad</a></li>
+                        <li><a href="fundadora.html">La Fundadora</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="rosario-7p.html">Rosario 7P</a></li>
+                        <li><a href="laudate-mariam.html">Laudate Mariam</a></li>
+                        <li><a href="contacto.html">Contacto y Sedes</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Obra de Amor. Monasterio de Clausura Contemplativa. Sitio seguro y estático.</p>
+                <p>Nox Contemplativa</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header, Tabs and Simulated Audio Player scripts -->
+    <script>
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Tab selection logic
+        function switchTab(evt, tabName) {
+            const tabContent = document.getElementsByClassName("tab-panel");
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+
+            const tabLinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Simulated Audio Player script
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const progressBar = document.getElementById('progress-bar');
+        
+        let isPlaying = false;
+        let playInterval;
+        let progress = 0;
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playIcon.innerHTML = '&#9611;&#9611;'; // Pause symbol
+                playInterval = setInterval(() => {
+                    progress += 0.8;
+                    if (progress >= 100) {
+                        progress = 0;
+                        isPlaying = false;
+                        playIcon.innerHTML = '&#9658;'; // Play symbol
+                        clearInterval(playInterval);
+                    }
+                    progressBar.style.width = progress + '%';
+                }, 100);
+            } else {
+                playIcon.innerHTML = '&#9658;';
+                clearInterval(playInterval);
+            }
+        });
+    </script>
+</body>
+</html>
