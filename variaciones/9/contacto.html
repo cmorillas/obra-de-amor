@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Obra de Amor</title>
+    <meta name="description" content="Obra de Amor - Familia religiosa contemplativa. Fidelidad absoluta y plena al Espíritu Santo.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <site-header></site-header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <article class="page-wrapper">
+            <h2 class="text-center">Contacto</h2>
+            <p class="text-lead">Escríbenos para unirte al Rosario 7P o para discernimiento vocacional</p>
+            
+            <div class="contact-grid">
+                <!-- Formulario -->
+                <div class="contact-form-wrapper">
+                    <h3>Envíanos un mensaje</h3>
+                    <form class="contact-form" id="static-contact-form" method="POST" target="_blank">
+                        <!-- FormSubmit configuration -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        
+                        <div class="form-group">
+                            <label for="form-name">Nombre completo</label>
+                            <input type="text" name="name" id="form-name" class="form-control" required placeholder="Tu nombre">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-email">Correo electrónico</label>
+                            <input type="email" name="email" id="form-email" class="form-control" required placeholder="tu-correo@ejemplo.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-dest">Destinatario / Delegación</label>
+                            <select id="form-dest" class="form-control" required>
+                                <option value="caceres">Obra de Amor (Cáceres, España)</option>
+                                <option value="chiapas">Obra de Amor (Chiapas, México)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-subject">Asunto</label>
+                            <input type="text" name="_subject" id="form-subject" class="form-control" required placeholder="Motivo de tu mensaje">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-message">Mensaje</label>
+                            <textarea name="message" id="form-message" class="form-control" rows="6" required placeholder="Escribe aquí tu mensaje..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-form-submit">Enviar Mensaje</button>
+                    </form>
+                </div>
+                
+                <!-- Datos de contacto -->
+                <div class="contact-info-panel">
+                    <div class="info-item">
+                        <h4 class="info-title">En España</h4>
+                        <p class="info-desc">
+                            Obra de Amor <br>
+                            Pza. de la Audiencia, 2<br>
+                            10003 Cáceres
+                        </p>
+                        <p class="info-desc" style="margin-top: 1rem;">
+                            Email: <a href="mailto:obradeamorcaceres@gmail.com">obradeamorcaceres@gmail.com</a>
+                        </p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h4 class="info-title">En México</h4>
+                        <p class="info-desc">
+                            Obra de Amor<br>
+                            29143 Ocuilapa<br>
+                            Mpio. de Ocozocoautla – Chiapas
+                        </p>
+                        <p class="info-desc" style="margin-top: 1rem;">
+                            Email: <a href="mailto:obradeamorchis@gmail.com">obradeamorchis@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">Obra de Amor</div>
+            <ul class="footer-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="carisma.html">Carisma</a></li>
+                <li><a href="biografia.html">Fundadora</a></li>
+                <li><a href="oracion-y-alabanza.html">Espiritualidad</a></li>
+                <li><a href="como-rezar-el-rosario-7p.html">Rosario 7P</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="footer-copy">
+                &copy; 2026 Obra de Amor. Todos los derechos reservados. Sitio estático seguro.
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("static-contact-form");
+    const destSelect = document.getElementById("form-dest");
+    
+    if (form && destSelect) {
+        const submitBtn = form.querySelector("button[type='submit']");
+        // Obra de Amor emails
+        const emails = {
+            caceres: "obradeamorcaceres@gmail.com",
+            chiapas: "obradeamorchis@gmail.com"
+        };
+        
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            const dest = destSelect.value;
+            const targetEmail = emails[dest] || emails.caceres;
+            
+            // Cambiar estado del botón
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = "Enviando...";
+            submitBtn.disabled = true;
+            
+            // Eliminar mensaje de error previo si existe
+            const prevError = form.querySelector(".form-error-message");
+            if (prevError) prevError.remove();
+            
+            // Recopilar datos en formato JSON
+            const formData = {
+                name: form.querySelector("#form-name").value,
+                email: form.querySelector("#form-email").value,
+                dest: destSelect.options[destSelect.selectedIndex].text,
+                _subject: form.querySelector("#form-subject").value,
+                message: form.querySelector("#form-message").value,
+                _captcha: "false"
+            };
+            
+            // Enviar vía AJAX (endpoint /ajax/ de FormSubmit)
+            fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Error en el envío");
+                }
+            })
+            .then(data => {
+                // Ocultar formulario con un desvanecimiento suave y mostrar mensaje de éxito
+                const wrapper = form.parentElement;
+                wrapper.style.opacity = 0;
+                wrapper.style.transition = "opacity 0.4s ease";
+                
+                setTimeout(() => {
+                    wrapper.innerHTML = `
+                        <div class="form-success-message" style="text-align: center; padding: 2.5rem 1.5rem; background: var(--crimson-50); border: 1px solid var(--border-color); border-radius: var(--radius-sm); animation: fadeIn 0.5s ease forwards;">
+                            <div class="success-icon" style="font-size: 3.5rem; color: var(--crimson-700); margin-bottom: 1rem; display: inline-block; line-height: 1;">✓</div>
+                            <h3 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--crimson-900); font-size: 1.5rem;">¡Mensaje enviado!</h3>
+                            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
+                                Gracias por escribir a la Obra de Amor. Tu mensaje ha sido enviado correctamente y te responderemos lo antes posible.
+                            </p>
+                        </div>
+                    `;
+                    wrapper.style.opacity = 1;
+                }, 400);
+            })
+            .catch(error => {
+                console.error("Error al enviar el formulario:", error);
+                
+                // Mostrar error al usuario
+                const errorDiv = document.createElement("div");
+                errorDiv.className = "form-error-message";
+                errorDiv.style.color = "#dc2626";
+                errorDiv.style.fontSize = "0.9rem";
+                errorDiv.style.marginTop = "1rem";
+                errorDiv.style.textAlign = "center";
+                errorDiv.style.fontWeight = "500";
+                errorDiv.textContent = "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.";
+                
+                form.appendChild(errorDiv);
+                
+                // Restaurar botón
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+});
+</script>
+
+<script src="assets/js/header-component.js"></script>
+</body>
+</html>
+
