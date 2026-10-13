@@ -974,25 +974,8 @@
                 keyMaterial,
                 { name: "AES-GCM", length: 256 },
                 false,
-                ["encrypt", "decrypt"]
+                ["decrypt"]
             );
-        }
-
-        async function encryptToken(token, password) {
-            const salt = crypto.getRandomValues(new Uint8Array(16));
-            const iv = crypto.getRandomValues(new Uint8Array(12));
-            const key = await deriveKey(password, salt);
-            const enc = new TextEncoder();
-            const ciphertext = await crypto.subtle.encrypt(
-                { name: "AES-GCM", iv: iv },
-                key,
-                enc.encode(token)
-            );
-            const combined = new Uint8Array(salt.length + iv.length + ciphertext.byteLength);
-            combined.set(salt, 0);
-            combined.set(iv, salt.length);
-            combined.set(new Uint8Array(ciphertext), salt.length + iv.length);
-            return btoa(String.fromCharCode(...combined));
         }
 
         async function decryptToken(encryptedBase64, password) {
@@ -1102,7 +1085,15 @@
                 });
 
                 if (!res.ok) throw new Error('Error al listar archivos: ' + res.statusText);
-                const items = await res.json();
+                let items = await res.json();
+
+                // Filtrar archivos del sistema y backups para mayor seguridad y claridad
+                items = items.filter(i => {
+                    if (!path && i.name === 'admin') return false; // Proteger el propio panel de administración
+                    if (i.name === '.gitignore' || i.name === 'CNAME') return false;
+                    if (i.name.endsWith('.bak')) return false; // Ocultar copias de seguridad
+                    return true;
+                });
 
                 // Ordenamos: primero carpetas, luego archivos alfabéticamente
                 items.sort((a, b) => {
