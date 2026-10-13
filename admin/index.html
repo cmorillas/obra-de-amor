@@ -853,9 +853,7 @@
                         <button type="button" class="tool-btn" onclick="promptLink()" title="Insertar enlace">🔗 Enlace</button>
                         <button type="button" class="tool-btn" onclick="execCmd('unlink')" title="Quitar enlace">Desenlazar</button>
                     </div>
-                    <div id="visual-editor-content" class="visual-editor-content" contenteditable="true" oninput="markUnsaved()">
-                        <!-- Contenido editable del article/main -->
-                    </div>
+                    <iframe id="visual-editor-frame" class="preview-frame" style="width: 100%; min-height: 550px; flex: 1; border: none; background: #ffffff;"></iframe>
                 </div>
 
                 <!-- SUB-VISTA C: EDITOR DE CÓDIGO FUENTE -->
@@ -1421,15 +1419,90 @@
             const sIdx = html.indexOf(startTag);
             const eIdx = html.indexOf(endTag, sIdx);
 
+            let inner = html;
             if (sIdx !== -1 && eIdx !== -1) {
                 currentFile.pageWrapperStart = sIdx + startTag.length;
                 currentFile.pageWrapperEnd = eIdx;
-                const inner = html.substring(currentFile.pageWrapperStart, currentFile.pageWrapperEnd);
-                document.getElementById('visual-editor-content').innerHTML = inner;
+                inner = html.substring(currentFile.pageWrapperStart, currentFile.pageWrapperEnd);
             } else {
-                // Fallback: mostrar todo el cuerpo
-                document.getElementById('visual-editor-content').innerHTML = html;
+                currentFile.pageWrapperStart = -1;
+                currentFile.pageWrapperEnd = -1;
             }
+            loadContentIntoVisualFrame(inner);
+        }
+
+        function loadContentIntoVisualFrame(innerHtml) {
+            const frame = document.getElementById('visual-editor-frame');
+            if (!frame) return;
+            const doc = frame.contentDocument || frame.contentWindow.document;
+
+            const frameHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <base href="../">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--celeste-50, #f0f9ff);
+            background-image: url('../assets/images/celeste2.jpg');
+            background-repeat: repeat;
+            margin: 0;
+            padding: 2rem 1.25rem;
+            color: var(--gray-700, #334155);
+            font-family: var(--font-body, system-ui, sans-serif);
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .page-wrapper {
+            background: #ffffff;
+            border-radius: var(--radius, 16px);
+            box-shadow: 0 4px 20px rgba(12, 74, 110, 0.08);
+            border: 1px solid rgba(186, 230, 253, 0.6);
+            padding: 2.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            outline: none;
+            min-height: 450px;
+        }
+        .page-wrapper:focus {
+            outline: 2px dashed var(--celeste-500, #0ea5e9);
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+    <article class="page-wrapper" contenteditable="true" id="editable-body">
+        ${innerHtml}
+    </article>
+</body>
+</html>`;
+
+            doc.open();
+            doc.write(frameHtml);
+            doc.close();
+
+            const attachListener = () => {
+                const editable = doc.getElementById('editable-body');
+                if (editable) {
+                    editable.addEventListener('input', () => {
+                        markUnsaved();
+                    });
+                }
+            };
+            setTimeout(attachListener, 50);
+        }
+
+        function getVisualEditorContent() {
+            const frame = document.getElementById('visual-editor-frame');
+            if (frame && frame.contentDocument) {
+                const editable = frame.contentDocument.getElementById('editable-body');
+                if (editable) return editable.innerHTML;
+            }
+            return '';
         }
 
         function updatePreviewFrame() {
@@ -1611,7 +1684,7 @@
                 const sIdx = currentBase.indexOf(startTag);
                 const eIdx = currentBase.indexOf(endTag, sIdx);
                 if (sIdx !== -1 && eIdx !== -1) {
-                    const visualContent = document.getElementById('visual-editor-content').innerHTML;
+                    const visualContent = getVisualEditorContent();
                     const before = currentBase.substring(0, sIdx + startTag.length);
                     const after = currentBase.substring(eIdx);
                     return before + visualContent + after;
@@ -1705,7 +1778,13 @@
            COMANDOS Y UTILIDADES DE FORMATO VISUAL
            ══════════════════════════════════════════════════════════════════ */
         function execCmd(command, value = null) {
-            document.execCommand(command, false, value);
+            const frame = document.getElementById('visual-editor-frame');
+            if (frame && frame.contentWindow && frame.contentDocument) {
+                frame.contentWindow.focus();
+                frame.contentDocument.execCommand(command, false, value);
+            } else {
+                document.execCommand(command, false, value);
+            }
             markUnsaved();
         }
 
