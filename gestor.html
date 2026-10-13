@@ -732,62 +732,6 @@
                     </button>
                 </form>
 
-                <div id="setup-link-wrapper" style="margin-top: 1.5rem; font-size: 0.8rem;">
-                    <a href="javascript:void(0)" onclick="showSetupScreen()" style="color: var(--text-muted); text-decoration: underline;">
-                        ⚙️ Configuración inicial de administrador
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. PANTALLA DE CONFIGURACIÓN INICIAL (PARA GENERAR LA CLAVE CIFRADA DEL TOKEN) -->
-        <div id="screen-setup" class="auth-container hidden">
-            <div class="auth-card" style="max-width: 550px; text-align: left;">
-                <h2 style="text-align: center;">Configuración Inicial</h2>
-                <p style="text-align: center; margin-bottom: 1.25rem;">
-                    Vincula tu token de GitHub y elige la contraseña para que cualquier persona pueda editar sin entrar a GitHub.
-                </p>
-
-                <div class="form-group">
-                    <label>1. Token Personal de GitHub (PAT)</label>
-                    <input type="password" id="setup-token" class="form-control" placeholder="ghp_... o github_pat_..." required>
-                    <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">
-                        Token con permiso de <code>Contents: Read and Write</code> sobre el repositorio.
-                    </small>
-                </div>
-
-                <div class="form-group">
-                    <label>2. Contraseña elegida</label>
-                    <input type="password" id="setup-pass" class="form-control" placeholder="Ej: ObraDeAmor2026" required>
-                    <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">
-                        Esta es la contraseña que usará la persona para acceder.
-                    </small>
-                </div>
-
-                <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
-                    <button type="button" class="btn btn-primary" onclick="generateEncryptedPayload()" style="flex: 1; justify-content: center;">
-                        🔐 Generar Clave Cifrada
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="hideSetupScreen()">
-                        Volver
-                    </button>
-                </div>
-
-                <div id="setup-result" class="hidden" style="margin-top: 1.25rem; background: var(--bg-page); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-                    <label style="font-weight: 600; font-size: 0.8rem; display: block; margin-bottom: 0.35rem;">
-                        ✅ Código cifrado generado con éxito:
-                    </label>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-                        Copia este código y pégalo en la variable <code>ENCRYPTED_TOKEN_PAYLOAD</code> dentro de este archivo <code>gestor.html</code>.
-                    </p>
-                    <textarea id="setup-output" class="form-control" rows="3" readonly style="font-family: var(--font-code); font-size: 0.8rem;"></textarea>
-                    <button type="button" id="btn-save-auto-payload" class="btn btn-success btn-sm" onclick="savePayloadDirectlyToGitHub()" style="margin-top: 0.5rem; width: 100%; justify-content: center;">
-                        🚀 Guardar y Activar Automáticamente en GitHub
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="copySetupPayload()" style="margin-top: 0.4rem; width: 100%; justify-content: center;">
-                        📋 O copiar al portapapeles
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -946,7 +890,7 @@
 
         // PAYLOAD CIFRADO DEL TOKEN (Generado desde el asistente con la contraseña del usuario)
         // El token se descifra con AES-GCM únicamente en la memoria RAM tras escribir la contraseña.
-        let ENCRYPTED_TOKEN_PAYLOAD = '';
+        let ENCRYPTED_TOKEN_PAYLOAD = 'DZxusDp+c+6qB0STI3jwuEK49KZiT9X/pTt3robQWLRsWl3OlAL+kMLDy43/yZGEJziE4IqeArXtsoSoqEets6jyaV6dVTX2x2mlx32zFt0MdouxBo3YLKNjWAOOxPS/gvn7i9xp/Gz/kNza/jQ/PD7WiT2YjMEvQFAkt0+6lk1cOCYYb/tgSFU=';
 
         /* ══════════════════════════════════════════════════════════════════
            ESTADO EN MEMORIA TEMPORAL (NO SE GUARDA EN LOCALSTORAGE)
@@ -1098,110 +1042,6 @@
             showToast('Sesión cerrada. La memoria se ha vaciado.', 'success');
         }
 
-        function showSetupScreen() {
-            document.getElementById('screen-login').classList.add('hidden');
-            document.getElementById('screen-setup').classList.remove('hidden');
-        }
-
-        function hideSetupScreen() {
-            document.getElementById('screen-setup').classList.add('hidden');
-            document.getElementById('screen-login').classList.remove('hidden');
-        }
-
-        async function generateEncryptedPayload() {
-            const token = document.getElementById('setup-token').value.trim();
-            const pass = document.getElementById('setup-pass').value.trim();
-            if (!token || !pass) {
-                alert('Por favor, rellena el token de GitHub y la contraseña.');
-                return;
-            }
-
-            try {
-                const payload = await encryptToken(token, pass);
-                document.getElementById('setup-output').value = payload;
-                document.getElementById('setup-result').classList.remove('hidden');
-                
-                // Actualizamos también la variable en caliente para probar al instante
-                ENCRYPTED_TOKEN_PAYLOAD = payload;
-                showToast('¡Clave generada! Recuerda guardarla en gestor.html.', 'success');
-            } catch (err) {
-                showToast('Error generando cifrado: ' + err.message, 'error');
-            }
-        }
-
-        function copySetupPayload() {
-            const text = document.getElementById('setup-output').value;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('¡Copiado al portapapeles!', 'success');
-            });
-        }
-
-        async function savePayloadDirectlyToGitHub() {
-            const token = document.getElementById('setup-token').value.trim();
-            const payload = document.getElementById('setup-output').value.trim();
-            const btn = document.getElementById('btn-save-auto-payload');
-
-            if (!token || !payload) {
-                alert('Genera primero la clave cifrada.');
-                return;
-            }
-
-            btn.disabled = true;
-            btn.textContent = '⏳ Guardando en GitHub...';
-
-            try {
-                // 1. Obtenemos gestor.html desde GitHub
-                const getUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/gestor.html?ref=${REPO_BRANCH}`;
-                const getRes = await fetch(getUrl, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/vnd.github+json'
-                    }
-                });
-
-                if (!getRes.ok) throw new Error('No se pudo leer gestor.html desde GitHub (asegúrate de haber hecho git push antes).');
-                const getData = await getRes.json();
-                const content = decodeBase64Utf8(getData.content);
-
-                // 2. Reemplazamos la variable ENCRYPTED_TOKEN_PAYLOAD
-                const regex = /let\s+ENCRYPTED_TOKEN_PAYLOAD\s*=\s*['"][^'"]*['"];/;
-                if (!regex.test(content)) {
-                    throw new Error('No se encontró la variable ENCRYPTED_TOKEN_PAYLOAD en el archivo.');
-                }
-                const updatedContent = content.replace(regex, `let ENCRYPTED_TOKEN_PAYLOAD = '${payload}';`);
-
-                // 3. Enviamos PUT
-                const putRes = await fetch(getUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/vnd.github+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Configurar clave cifrada en gestor.html',
-                        content: encodeBase64Utf8(updatedContent),
-                        sha: getData.sha,
-                        branch: REPO_BRANCH
-                    })
-                });
-
-                if (!putRes.ok) {
-                    const errJson = await putRes.json();
-                    throw new Error(errJson.message || 'Error guardando en GitHub');
-                }
-
-                ENCRYPTED_TOKEN_PAYLOAD = payload;
-                showToast('✅ ¡Guardado y activado en GitHub! Ya puedes entrar con tu contraseña.', 'success');
-                hideSetupScreen();
-
-            } catch (err) {
-                showToast('Error: ' + err.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '🚀 Guardar y Activar Automáticamente en GitHub';
-            }
-        }
 
         /* ══════════════════════════════════════════════════════════════════
            EXPLORADOR DE ARCHIVOS (GITHUB CONTENTS API)
