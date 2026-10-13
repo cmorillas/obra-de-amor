@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Gestor de Contenidos — Obra de Amor</title>
-    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -696,7 +696,7 @@
     <!-- Header / Navbar -->
     <header class="app-header">
         <a href="javascript:void(0)" onclick="goToHome()" class="header-brand">
-            <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+            <img src="../assets/images/logo.png" alt="Obra de Amor Logo">
             <div class="brand-text">
                 <h1>Obra de Amor</h1>
                 <span>Gestor de Archivos Web</span>
@@ -718,7 +718,7 @@
         <!-- 1. PANTALLA DE ACCESO (LOGIN CON CONTRASEÑA EN MEMORIA) -->
         <div id="screen-login" class="auth-container">
             <div class="auth-card">
-                <img src="assets/images/logo.png" alt="Logo" class="logo">
+                <img src="../assets/images/logo.png" alt="Logo" class="logo">
                 <h2>Acceso al Gestor</h2>
                 <p>Introduce tu contraseña de acceso para administrar y editar el contenido del sitio web.</p>
                 
@@ -1180,7 +1180,7 @@
                 } else {
                     actionsDiv.innerHTML = `
                         <button class="btn btn-primary btn-sm" onclick="openFileByPath('${item.path}')">✏️ Editar</button>
-                        <a href="${item.name}" target="_blank" class="btn btn-secondary btn-sm">👁️ Ver</a>
+                        <a href="../${item.path}" target="_blank" class="btn btn-secondary btn-sm">👁️ Ver</a>
                     `;
                 }
                 tdActions.appendChild(actionsDiv);
@@ -1359,7 +1359,13 @@
         function updatePreviewFrame() {
             const previewDoc = document.getElementById('preview-frame').contentDocument;
             previewDoc.open();
-            previewDoc.write(buildUpdatedFullHtml());
+            let html = buildUpdatedFullHtml();
+            if (html.includes('<head>')) {
+                html = html.replace('<head>', '<head><base href="../">');
+            } else if (html.includes('<HEAD>')) {
+                html = html.replace('<HEAD>', '<HEAD><base href="../">');
+            }
+            previewDoc.write(html);
             previewDoc.close();
         }
 
