@@ -1285,6 +1285,10 @@
             const tabsBar = document.getElementById('editor-tabs-bar');
             tabsBar.innerHTML = '';
 
+            // Poblamos el editor de código con CodeMirror primero
+            const ext = currentFile.name.split('.').pop().toLowerCase();
+            initOrUpdateCodeMirror(currentFile.fullHtml, ext);
+
             // Si es grupo-laudate-mariam.html: Pestaña especial de Lista
             if (currentFile.isLaudate) {
                 tabsBar.innerHTML += `
@@ -1329,10 +1333,6 @@
                 `;
                 switchEditorTab('code');
             }
-
-            // Poblamos el editor de código con CodeMirror
-            const ext = currentFile.name.split('.').pop().toLowerCase();
-            initOrUpdateCodeMirror(currentFile.fullHtml, ext);
         }
 
         function initOrUpdateCodeMirror(content, ext) {
@@ -1374,24 +1374,57 @@
             setTimeout(() => cmEditor.refresh(), 50);
         }
 
-        function switchEditorTab(tab) {
-            // Sincronizar contenidos entre pestañas antes de cambiar
-            if (tab === 'code') {
-                // Al pasar a código, actualizamos CodeMirror con lo que se haya editado visualmente o en laudate
-                if (currentFile.isLaudate || (currentFile.isHtml && currentFile.pageWrapperStart !== -1)) {
-                    const updated = buildUpdatedFullHtml();
-                    if (cmEditor) cmEditor.setValue(updated);
+        function syncActiveTabToCodeMirror() {
+            if (!cmEditor) return;
+            const activeVisual = document.getElementById('tab-btn-visual')?.classList.contains('active');
+            const activeLaudate = document.getElementById('tab-btn-laudate')?.classList.contains('active');
+
+            if (activeVisual && currentFile.isHtml && currentFile.pageWrapperStart !== -1) {
+                const currentBase = cmEditor.getValue();
+                const startTag = '<article class="page-wrapper">';
+                const endTag = '</article>';
+                const sIdx = currentBase.indexOf(startTag);
+                const eIdx = currentBase.indexOf(endTag, sIdx);
+                if (sIdx !== -1 && eIdx !== -1) {
+                    const visualContent = getVisualEditorContent();
+                    const before = currentBase.substring(0, sIdx + startTag.length);
+                    const after = currentBase.substring(eIdx);
+                    cmEditor.setValue(before + visualContent + after);
                 }
-            } else if (tab === 'visual') {
-                // Al pasar a visual, extraemos el contenido desde CodeMirror
-                if (cmEditor && currentFile.isHtml) {
-                    extractPageWrapper(cmEditor.getValue());
+            } else if (activeLaudate && currentFile.isLaudate) {
+                const currentBase = cmEditor.getValue();
+                const olStart = currentBase.indexOf('<ol>');
+                const olEnd = currentBase.indexOf('</ol>');
+                if (olStart !== -1 && olEnd !== -1) {
+                    let olItemsHtml = '\n';
+                    laudateList.forEach(item => {
+                        olItemsHtml += `<li>${item.raw}</li>\n`;
+                    });
+                    const before = currentBase.substring(0, olStart + 4);
+                    const after = currentBase.substring(olEnd);
+                    cmEditor.setValue(before + olItemsHtml + after);
                 }
             }
+        }
+
+        function switchEditorTab(tab) {
+            // Sincronizar contenidos desde la pestaña activa saliente hacia CodeMirror
+            syncActiveTabToCodeMirror();
 
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`tab-btn-${tab}`);
             if (activeBtn) activeBtn.classList.add('active');
+
+            // Si entramos a visual o laudate, refrescamos su contenido desde CodeMirror
+            if (tab === 'visual') {
+                if (cmEditor && currentFile.isHtml) {
+                    extractPageWrapper(cmEditor.getValue());
+                }
+            } else if (tab === 'laudate') {
+                if (cmEditor && currentFile.isLaudate) {
+                    parseLaudateMariamList(cmEditor.getValue());
+                }
+            }
 
             // Ocultamos todas las vistas
             document.getElementById('view-laudate').classList.add('hidden');
@@ -1656,43 +1689,8 @@
            GUARDADO Y PUBLICACIÓN DIRECTA EN GITHUB VIA API
            ══════════════════════════════════════════════════════════════════ */
         function buildUpdatedFullHtml() {
-            // Si la pestaña activa es Código, el contenido de CodeMirror manda:
-            const activeCodeTab = document.getElementById('tab-btn-code')?.classList.contains('active');
-            if (activeCodeTab && cmEditor) {
-                return cmEditor.getValue();
-            }
-
-            if (currentFile.isLaudate) {
-                // Reconstruimos la sección <ol>...</ol>
-                const currentBase = cmEditor ? cmEditor.getValue() : currentFile.fullHtml;
-                const olStart = currentBase.indexOf('<ol>');
-                const olEnd = currentBase.indexOf('</ol>');
-                if (olStart !== -1 && olEnd !== -1) {
-                    let olItemsHtml = '\n';
-                    laudateList.forEach(item => {
-                        olItemsHtml += `<li>${item.raw}</li>\n`;
-                    });
-                    const before = currentBase.substring(0, olStart + 4);
-                    const after = currentBase.substring(olEnd);
-                    return before + olItemsHtml + after;
-                }
-            } else if (currentFile.isHtml && currentFile.pageWrapperStart !== -1) {
-                // Reemplazamos únicamente el contenido del <article class="page-wrapper">
-                const currentBase = cmEditor ? cmEditor.getValue() : currentFile.fullHtml;
-                const startTag = '<article class="page-wrapper">';
-                const endTag = '</article>';
-                const sIdx = currentBase.indexOf(startTag);
-                const eIdx = currentBase.indexOf(endTag, sIdx);
-                if (sIdx !== -1 && eIdx !== -1) {
-                    const visualContent = getVisualEditorContent();
-                    const before = currentBase.substring(0, sIdx + startTag.length);
-                    const after = currentBase.substring(eIdx);
-                    return before + visualContent + after;
-                }
-            }
-
-            // Fallback o archivos no-HTML: lo que esté en CodeMirror
-            return cmEditor ? cmEditor.getValue() : document.getElementById('code-textarea').value;
+            syncActiveTabToCodeMirror();
+            return cmEditor ? cmEditor.getValue() : (document.getElementById('code-textarea') ? document.getElementById('code-textarea').value : '');
         }
 
         async function saveCurrentFile() {
