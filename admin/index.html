@@ -10,6 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
+    <!-- CodeMirror 5 & Linters (WordPress Style) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/lint/lint.min.css">
+    
     <style>
         :root {
             --primary: #0284c7;
@@ -608,6 +613,23 @@
             tab-size: 4;
         }
 
+        .CodeMirror {
+            height: auto;
+            min-height: 550px;
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        .CodeMirror-lint-tooltip {
+            z-index: 10000 !important;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-sm);
+        }
+
         /* ─── PREVIEW IFRAME ─── */
         .preview-frame {
             width: 100%;
@@ -879,8 +901,25 @@
         </div>
     </div>
 
+    <!-- CodeMirror Core & Modes (WordPress Combo) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/htmlmixed/htmlmixed.min.js"></script>
+
+    <!-- Linters -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/lint/lint.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmlhint@1.1.4/dist/htmlhint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/lint/html-lint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.6/jshint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/lint/javascript-lint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/lint/css-lint.min.js"></script>
+
     <!-- SCRIPT DEL GESTOR (100% CLIENT-SIDE & SIN DEPENDENCIAS) -->
     <script>
+        let cmEditor = null; // Instancia de CodeMirror
         /* ══════════════════════════════════════════════════════════════════
            CONFIGURACIÓN DEL REPOSITORIO GITHUB
            ══════════════════════════════════════════════════════════════════ */
@@ -1311,11 +1350,65 @@
                 switchEditorTab('code');
             }
 
-            // Poblamos el editor de código con todo el texto original
-            document.getElementById('code-textarea').value = currentFile.fullHtml;
+            // Poblamos el editor de código con CodeMirror
+            const ext = currentFile.name.split('.').pop().toLowerCase();
+            initOrUpdateCodeMirror(currentFile.fullHtml, ext);
+        }
+
+        function initOrUpdateCodeMirror(content, ext) {
+            let mode = 'htmlmixed';
+            let lintConfig = true;
+
+            if (ext === 'css') {
+                mode = 'css';
+            } else if (ext === 'js') {
+                mode = 'javascript';
+            } else if (['html', 'htm'].includes(ext)) {
+                mode = 'htmlmixed';
+            } else {
+                mode = 'null';
+                lintConfig = false;
+            }
+
+            if (!cmEditor) {
+                const textarea = document.getElementById('code-textarea');
+                cmEditor = CodeMirror.fromTextArea(textarea, {
+                    lineNumbers: true,
+                    mode: mode,
+                    theme: 'dracula',
+                    lineWrapping: true,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-lint-markers"],
+                    lint: lintConfig,
+                    tabSize: 4,
+                    indentWithTabs: false
+                });
+                cmEditor.on('change', () => {
+                    markUnsaved();
+                });
+            } else {
+                cmEditor.setOption('mode', mode);
+                cmEditor.setOption('lint', lintConfig);
+            }
+
+            cmEditor.setValue(content);
+            setTimeout(() => cmEditor.refresh(), 50);
         }
 
         function switchEditorTab(tab) {
+            // Sincronizar contenidos entre pestañas antes de cambiar
+            if (tab === 'code') {
+                // Al pasar a código, actualizamos CodeMirror con lo que se haya editado visualmente o en laudate
+                if (currentFile.isLaudate || (currentFile.isHtml && currentFile.pageWrapperStart !== -1)) {
+                    const updated = buildUpdatedFullHtml();
+                    if (cmEditor) cmEditor.setValue(updated);
+                }
+            } else if (tab === 'visual') {
+                // Al pasar a visual, extraemos el contenido desde CodeMirror
+                if (cmEditor && currentFile.isHtml) {
+                    extractPageWrapper(cmEditor.getValue());
+                }
+            }
+
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`tab-btn-${tab}`);
             if (activeBtn) activeBtn.classList.add('active');
@@ -1332,6 +1425,7 @@
                 document.getElementById('view-visual').classList.remove('hidden');
             } else if (tab === 'code') {
                 document.getElementById('view-code').classList.remove('hidden');
+                setTimeout(() => { if (cmEditor) cmEditor.refresh(); }, 30);
             } else if (tab === 'preview') {
                 document.getElementById('view-preview').classList.remove('hidden');
                 updatePreviewFrame();
@@ -1507,29 +1601,43 @@
            GUARDADO Y PUBLICACIÓN DIRECTA EN GITHUB VIA API
            ══════════════════════════════════════════════════════════════════ */
         function buildUpdatedFullHtml() {
+            // Si la pestaña activa es Código, el contenido de CodeMirror manda:
+            const activeCodeTab = document.getElementById('tab-btn-code')?.classList.contains('active');
+            if (activeCodeTab && cmEditor) {
+                return cmEditor.getValue();
+            }
+
             if (currentFile.isLaudate) {
                 // Reconstruimos la sección <ol>...</ol>
-                const olStart = currentFile.fullHtml.indexOf('<ol>');
-                const olEnd = currentFile.fullHtml.indexOf('</ol>');
+                const currentBase = cmEditor ? cmEditor.getValue() : currentFile.fullHtml;
+                const olStart = currentBase.indexOf('<ol>');
+                const olEnd = currentBase.indexOf('</ol>');
                 if (olStart !== -1 && olEnd !== -1) {
                     let olItemsHtml = '\n';
                     laudateList.forEach(item => {
                         olItemsHtml += `<li>${item.raw}</li>\n`;
                     });
-                    const before = currentFile.fullHtml.substring(0, olStart + 4);
-                    const after = currentFile.fullHtml.substring(olEnd);
+                    const before = currentBase.substring(0, olStart + 4);
+                    const after = currentBase.substring(olEnd);
                     return before + olItemsHtml + after;
                 }
             } else if (currentFile.isHtml && currentFile.pageWrapperStart !== -1) {
                 // Reemplazamos únicamente el contenido del <article class="page-wrapper">
-                const visualContent = document.getElementById('visual-editor-content').innerHTML;
-                const before = currentFile.fullHtml.substring(0, currentFile.pageWrapperStart);
-                const after = currentFile.fullHtml.substring(currentFile.pageWrapperEnd);
-                return before + visualContent + after;
+                const currentBase = cmEditor ? cmEditor.getValue() : currentFile.fullHtml;
+                const startTag = '<article class="page-wrapper">';
+                const endTag = '</article>';
+                const sIdx = currentBase.indexOf(startTag);
+                const eIdx = currentBase.indexOf(endTag, sIdx);
+                if (sIdx !== -1 && eIdx !== -1) {
+                    const visualContent = document.getElementById('visual-editor-content').innerHTML;
+                    const before = currentBase.substring(0, sIdx + startTag.length);
+                    const after = currentBase.substring(eIdx);
+                    return before + visualContent + after;
+                }
             }
 
-            // Fallback o archivos no-HTML: lo que esté en el textarea de código
-            return document.getElementById('code-textarea').value;
+            // Fallback o archivos no-HTML: lo que esté en CodeMirror
+            return cmEditor ? cmEditor.getValue() : document.getElementById('code-textarea').value;
         }
 
         async function saveCurrentFile() {
