@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Gestor de Contenidos — Obra de Amor</title>
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --gold: #b8942f;
+            --gold-light: #fef9c3;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-title: 'Cormorant Garamond', Georgia, serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ─── HEADER / NAVBAR ─── */
+        header.app-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .header-brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-family: var(--font-title);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.1;
+        }
+
+        .brand-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: #ffffff;
+        }
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            border-color: var(--border);
+            color: var(--text-main);
+        }
+        .btn-secondary:hover {
+            background-color: var(--bg-page);
+            border-color: #cbd5e1;
+        }
+
+        .btn-danger {
+            background-color: #fee2e2;
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+        .btn-danger:hover {
+            background-color: var(--danger);
+            color: #ffffff;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.8rem;
+        }
+
+        /* ─── TOAST NOTIFICATIONS ─── */
+        #toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: #ffffff;
+            color: var(--text-main);
+            padding: 0.85rem 1.25rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            animation: slideIn 0.3s ease;
+        }
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        main.app-main {
+            flex: 1;
+            padding: 1.5rem;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ─── LOGIN & SETUP SCREENS ─── */
+        .auth-container {
+            min-height: calc(80vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 460px;
+            text-align: center;
+        }
+
+        .auth-card .logo {
+            width: 68px;
+            height: 68px;
+            margin-bottom: 1.25rem;
+        }
+
+        .auth-card h2 {
+            font-family: var(--font-title);
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        /* ─── FILE EXPLORER (TINYFILEMANAGER STYLE) ─── */
+        .explorer-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .explorer-toolbar {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            background: #ffffff;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            overflow-x: auto;
+        }
+
+        .breadcrumb-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--primary-dark);
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+        .breadcrumb-item:hover {
+            background: var(--primary-light);
+        }
+        .breadcrumb-item.active {
+            color: var(--text-main);
+            font-weight: 600;
+            cursor: default;
+        }
+        .breadcrumb-item.active:hover {
+            background: none;
+        }
+
+        .explorer-search {
+            position: relative;
+            min-width: 260px;
+        }
+
+        .explorer-search input {
+            padding-left: 2.2rem;
+        }
+
+        .explorer-search .icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ─── TABLE ─── */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table.file-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.file-table th {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        table.file-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        table.file-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .file-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+        .file-name-cell:hover {
+            color: var(--primary);
+        }
+
+        .file-icon {
+            font-size: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+        }
+
+        .badge-type {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: #475569;
+            text-transform: uppercase;
+        }
+
+        .badge-html { background: #fee2e2; color: #b91c1c; }
+        .badge-css { background: #e0f2fe; color: #0369a1; }
+        .badge-js { background: #fef3c7; color: #b45309; }
+        .badge-image { background: #ede9fe; color: #6d28d9; }
+        .badge-folder { background: #fef9c3; color: #854d0e; }
+
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* ─── EDITOR CONTAINER ─── */
+        .editor-container {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
+        }
+
+        .editor-header {
+            padding: 0.85rem 1.25rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .editor-file-info {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .editor-tabs {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--bg-page);
+            padding: 0.25rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        /* ─── LAUDATE MARIAM SPECIAL LIST MANAGER ─── */
+        .laudate-manager {
+            padding: 1.5rem;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .laudate-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: var(--bg-page);
+            padding: 0.85rem 1.25rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .laudate-counter {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .laudate-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .laudate-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+            gap: 0.75rem;
+        }
+
+        .laudate-item:hover {
+            border-color: var(--primary-light);
+            background: #f8fafc;
+        }
+
+        .laudate-item-num {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 32px;
+        }
+
+        .laudate-item-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* ─── VISUAL WYSIWYG EDITOR ─── */
+        .visual-toolbar {
+            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .tool-btn {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+        .tool-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .visual-editor-content {
+            padding: 2rem;
+            flex: 1;
+            min-height: 500px;
+            outline: none;
+            overflow-y: auto;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            background: #ffffff;
+        }
+
+        .visual-editor-content blockquote {
+            border-left: 4px solid var(--gold);
+            padding-left: 1.25rem;
+            margin: 1.5rem 0;
+            color: #475569;
+            font-style: italic;
+        }
+
+        /* ─── CODE EDITOR ─── */
+        .code-editor-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+            background: #0f172a;
+            min-height: 550px;
+        }
+
+        textarea.code-textarea {
+            width: 100%;
+            height: 100%;
+            min-height: 550px;
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            padding: 1.25rem;
+            border: none;
+            outline: none;
+            resize: vertical;
+            line-height: 1.6;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        /* ─── PREVIEW IFRAME ─── */
+        .preview-frame {
+            width: 100%;
+            height: 650px;
+            border: none;
+            background: #ffffff;
+        }
+
+        /* ─── MODAL ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            padding: 1.75rem;
+            animation: modalFade 0.2s ease;
+        }
+
+        @keyframes modalFade {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            header.app-header {
+                padding: 0.6rem 1rem;
+            }
+            .brand-text h1 {
+                font-size: 1.1rem;
+            }
+            main.app-main {
+                padding: 0.75rem;
+            }
+            .editor-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="app-header">
+        <a href="javascript:void(0)" onclick="goToHome()" class="header-brand">
+            <img src="assets/images/logo.png" alt="Obra de Amor Logo">
+            <div class="brand-text">
+                <h1>Obra de Amor</h1>
+                <span>Gestor de Archivos Web</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button id="btn-logout" class="btn btn-secondary btn-sm hidden" onclick="handleLogout()">
+                🔒 Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- Toasts Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Main Container -->
+    <main class="app-main">
+
+        <!-- 1. PANTALLA DE ACCESO (LOGIN CON CONTRASEÑA EN MEMORIA) -->
+        <div id="screen-login" class="auth-container">
+            <div class="auth-card">
+                <img src="assets/images/logo.png" alt="Logo" class="logo">
+                <h2>Acceso al Gestor</h2>
+                <p>Introduce tu contraseña de acceso para administrar y editar el contenido del sitio web.</p>
+                
+                <form id="form-login" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="input-password">Contraseña de acceso</label>
+                        <input type="password" id="input-password" class="form-control" placeholder="Escribe tu contraseña..." required autofocus>
+                    </div>
+                    <button type="submit" id="btn-submit-login" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        🔓 Entrar al Gestor
+                    </button>
+                </form>
+
+                <div id="setup-link-wrapper" style="margin-top: 1.5rem; font-size: 0.8rem;">
+                    <a href="javascript:void(0)" onclick="showSetupScreen()" style="color: var(--text-muted); text-decoration: underline;">
+                        ⚙️ Configuración inicial de administrador
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. PANTALLA DE CONFIGURACIÓN INICIAL (PARA GENERAR LA CLAVE CIFRADA DEL TOKEN) -->
+        <div id="screen-setup" class="auth-container hidden">
+            <div class="auth-card" style="max-width: 550px; text-align: left;">
+                <h2 style="text-align: center;">Configuración Inicial</h2>
+                <p style="text-align: center; margin-bottom: 1.25rem;">
+                    Vincula tu token de GitHub y elige la contraseña para que cualquier persona pueda editar sin entrar a GitHub.
+                </p>
+
+                <div class="form-group">
+                    <label>1. Token Personal de GitHub (PAT)</label>
+                    <input type="password" id="setup-token" class="form-control" placeholder="ghp_... o github_pat_..." required>
+                    <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">
+                        Token con permiso de <code>Contents: Read and Write</code> sobre el repositorio.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label>2. Contraseña elegida</label>
+                    <input type="password" id="setup-pass" class="form-control" placeholder="Ej: ObraDeAmor2026" required>
+                    <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">
+                        Esta es la contraseña que usará la persona para acceder.
+                    </small>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-primary" onclick="generateEncryptedPayload()" style="flex: 1; justify-content: center;">
+                        🔐 Generar Clave Cifrada
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="hideSetupScreen()">
+                        Volver
+                    </button>
+                </div>
+
+                <div id="setup-result" class="hidden" style="margin-top: 1.25rem; background: var(--bg-page); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                    <label style="font-weight: 600; font-size: 0.8rem; display: block; margin-bottom: 0.35rem;">
+                        ✅ Código cifrado generado con éxito:
+                    </label>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                        Copia este código y pégalo en la variable <code>ENCRYPTED_TOKEN_PAYLOAD</code> dentro de este archivo <code>gestor.html</code>.
+                    </p>
+                    <textarea id="setup-output" class="form-control" rows="3" readonly style="font-family: var(--font-code); font-size: 0.8rem;"></textarea>
+                    <button type="button" id="btn-save-auto-payload" class="btn btn-success btn-sm" onclick="savePayloadDirectlyToGitHub()" style="margin-top: 0.5rem; width: 100%; justify-content: center;">
+                        🚀 Guardar y Activar Automáticamente en GitHub
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="copySetupPayload()" style="margin-top: 0.4rem; width: 100%; justify-content: center;">
+                        📋 O copiar al portapapeles
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. EXPLORADOR DE ARCHIVOS (ESTILO TINYFILEMANAGER) -->
+        <div id="screen-explorer" class="hidden">
+            <div class="explorer-card">
+                <div class="explorer-toolbar">
+                    <div class="breadcrumbs" id="explorer-breadcrumbs">
+                        <span class="breadcrumb-item active">📁 Inicio</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                        <div class="explorer-search">
+                            <span class="icon">🔍</span>
+                            <input type="text" id="file-search-input" class="form-control" placeholder="Buscar archivo..." oninput="filterFiles()">
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="loadDirectory(currentPath)" title="Recargar lista">
+                            🔄
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="file-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%;">Nombre</th>
+                                <th style="width: 15%;">Tipo</th>
+                                <th style="width: 15%;">Tamaño</th>
+                                <th style="width: 25%; text-align: right;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="file-table-body">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PANTALLA DEL EDITOR (VISUAL / LISTA LAUDATE / CÓDIGO) -->
+        <div id="screen-editor" class="hidden">
+            <div class="editor-container">
+                <div class="editor-header">
+                    <div class="editor-file-info">
+                        <span id="editor-file-icon">📄</span>
+                        <span id="editor-file-name">archivo.html</span>
+                        <span id="editor-unsaved" class="badge-type hidden" style="background: #fef3c7; color: #b45309;">Sin guardar</span>
+                    </div>
+
+                    <div class="editor-tabs" id="editor-tabs-bar">
+                        <!-- Pestañas generadas según el tipo de archivo -->
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary btn-sm" onclick="closeEditor()">
+                            ⬅ Volver al listado
+                        </button>
+                        <button class="btn btn-success btn-sm" id="btn-save-file" onclick="saveCurrentFile()">
+                            💾 Guardar y Publicar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-VISTA A: GESTOR DE LA LISTA LAUDATE MARIAM -->
+                <div id="view-laudate" class="laudate-manager hidden">
+                    <div class="laudate-bar">
+                        <div class="laudate-counter" id="laudate-total-count">Total: 0 miembros</div>
+                        <div style="display: flex; gap: 0.5rem; flex: 1; max-width: 400px;">
+                            <input type="text" id="laudate-search-input" class="form-control" placeholder="🔍 Filtrar por nombre o lugar..." oninput="filterLaudateItems()">
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="openAddLaudateModal()">
+                            ➕ Añadir persona
+                        </button>
+                    </div>
+
+                    <div class="laudate-list" id="laudate-items-container">
+                        <!-- Elementos de la lista Laudate Mariam -->
+                    </div>
+                </div>
+
+                <!-- SUB-VISTA B: EDITOR VISUAL (WYSIWYG) -->
+                <div id="view-visual" class="hidden" style="display: flex; flex-direction: column; flex: 1;">
+                    <div class="visual-toolbar">
+                        <button type="button" class="tool-btn" onclick="execCmd('bold')" title="Negrita"><b>B</b></button>
+                        <button type="button" class="tool-btn" onclick="execCmd('italic')" title="Cursiva"><i>I</i></button>
+                        <button type="button" class="tool-btn" onclick="execCmd('underline')" title="Subrayado"><u>U</u></button>
+                        <span style="border-left: 1px solid var(--border); margin: 0 4px;"></span>
+                        <button type="button" class="tool-btn" onclick="execCmd('formatBlock', 'h2')" title="Título 2">H2</button>
+                        <button type="button" class="tool-btn" onclick="execCmd('formatBlock', 'h3')" title="Título 3">H3</button>
+                        <button type="button" class="tool-btn" onclick="execCmd('formatBlock', 'p')" title="Párrafo normal">Párrafo</button>
+                        <button type="button" class="tool-btn" onclick="execCmd('formatBlock', 'blockquote')" title="Cita">“Cita”</button>
+                        <span style="border-left: 1px solid var(--border); margin: 0 4px;"></span>
+                        <button type="button" class="tool-btn" onclick="execCmd('insertUnorderedList')" title="Lista con viñetas">• Lista</button>
+                        <button type="button" class="tool-btn" onclick="execCmd('insertOrderedList')" title="Lista numerada">1. Lista</button>
+                        <span style="border-left: 1px solid var(--border); margin: 0 4px;"></span>
+                        <button type="button" class="tool-btn" onclick="promptLink()" title="Insertar enlace">🔗 Enlace</button>
+                        <button type="button" class="tool-btn" onclick="execCmd('unlink')" title="Quitar enlace">Desenlazar</button>
+                    </div>
+                    <div id="visual-editor-content" class="visual-editor-content" contenteditable="true" oninput="markUnsaved()">
+                        <!-- Contenido editable del article/main -->
+                    </div>
+                </div>
+
+                <!-- SUB-VISTA C: EDITOR DE CÓDIGO FUENTE -->
+                <div id="view-code" class="code-editor-area hidden">
+                    <textarea id="code-textarea" class="code-textarea" spellcheck="false" oninput="markUnsaved()"></textarea>
+                </div>
+
+                <!-- SUB-VISTA D: VISTA PREVIA -->
+                <div id="view-preview" class="hidden">
+                    <iframe id="preview-frame" class="preview-frame"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL: AÑADIR / EDITAR MIEMBRO DE LAUDATE MARIAM -->
+    <div id="modal-laudate" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-laudate-title">Añadir Persona</h3>
+                <button class="modal-close" onclick="closeLaudateModal()">&times;</button>
+            </div>
+            <form onsubmit="handleSaveLaudateItem(event)">
+                <input type="hidden" id="laudate-edit-index" value="-1">
+                <div class="form-group">
+                    <label for="laudate-field-name">Nombre / Familia</label>
+                    <input type="text" id="laudate-field-name" class="form-control" placeholder="Ej: Familia Gordillo Torres o Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label for="laudate-field-place">Lugar / Diócesis</label>
+                    <input type="text" id="laudate-field-place" class="form-control" placeholder="Ej: Chiapas, México o Alicante, España" required>
+                </div>
+                <div class="form-group">
+                    <label for="laudate-field-status">Compromiso / Fecha</label>
+                    <input type="text" id="laudate-field-status" class="form-control" placeholder="Ej: Renovó el compromiso en mayo 2026" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeLaudateModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT DEL GESTOR (100% CLIENT-SIDE & SIN DEPENDENCIAS) -->
+    <script>
+        /* ══════════════════════════════════════════════════════════════════
+           CONFIGURACIÓN DEL REPOSITORIO GITHUB
+           ══════════════════════════════════════════════════════════════════ */
+        const REPO_OWNER = 'cmorillas';
+        const REPO_NAME = 'obra-de-amor';
+        const REPO_BRANCH = 'main';
+
+        // PAYLOAD CIFRADO DEL TOKEN (Generado desde el asistente con la contraseña del usuario)
+        // El token se descifra con AES-GCM únicamente en la memoria RAM tras escribir la contraseña.
+        let ENCRYPTED_TOKEN_PAYLOAD = '';
+
+        /* ══════════════════════════════════════════════════════════════════
+           ESTADO EN MEMORIA TEMPORAL (NO SE GUARDA EN LOCALSTORAGE)
+           ══════════════════════════════════════════════════════════════════ */
+        let sessionToken = null; // Token descifrado en RAM durante la sesión
+        let currentPath = '';    // Ruta actual dentro del explorador
+        let directoryItems = []; // Archivos y carpetas del directorio actual
+        
+        // Estado del editor actual
+        let currentFile = {
+            path: '',
+            sha: '',
+            fullHtml: '',
+            pageWrapperStart: -1,
+            pageWrapperEnd: -1,
+            isLaudate: false,
+            hasUnsavedChanges: false
+        };
+
+        // Elementos de la lista Laudate Mariam
+        let laudateList = [];
+
+        /* ══════════════════════════════════════════════════════════════════
+           CRIPTOGRAFÍA NATIVA WEB CRYPTO (AES-GCM 256 + PBKDF2)
+           ══════════════════════════════════════════════════════════════════ */
+        async function deriveKey(password, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                "raw",
+                enc.encode(password),
+                { name: "PBKDF2" },
+                false,
+                ["deriveKey"]
+            );
+            return crypto.subtle.deriveKey(
+                {
+                    name: "PBKDF2",
+                    salt: salt,
+                    iterations: 100000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                { name: "AES-GCM", length: 256 },
+                false,
+                ["encrypt", "decrypt"]
+            );
+        }
+
+        async function encryptToken(token, password) {
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const key = await deriveKey(password, salt);
+            const enc = new TextEncoder();
+            const ciphertext = await crypto.subtle.encrypt(
+                { name: "AES-GCM", iv: iv },
+                key,
+                enc.encode(token)
+            );
+            const combined = new Uint8Array(salt.length + iv.length + ciphertext.byteLength);
+            combined.set(salt, 0);
+            combined.set(iv, salt.length);
+            combined.set(new Uint8Array(ciphertext), salt.length + iv.length);
+            return btoa(String.fromCharCode(...combined));
+        }
+
+        async function decryptToken(encryptedBase64, password) {
+            try {
+                const binStr = atob(encryptedBase64);
+                const combined = new Uint8Array(binStr.length);
+                for (let i = 0; i < binStr.length; i++) combined[i] = binStr.charCodeAt(i);
+                
+                const salt = combined.slice(0, 16);
+                const iv = combined.slice(16, 28);
+                const ciphertext = combined.slice(28);
+                
+                const key = await deriveKey(password, salt);
+                const decrypted = await crypto.subtle.decrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    ciphertext
+                );
+                return new TextDecoder().decode(decrypted);
+            } catch (e) {
+                throw new Error("Contraseña incorrecta");
+            }
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           AUTENTICACIÓN Y CONTROL DE SESIÓN
+           ══════════════════════════════════════════════════════════════════ */
+        async function handleLogin(e) {
+            e.preventDefault();
+            const passwordInput = document.getElementById('input-password');
+            const pass = passwordInput.value.trim();
+            if (!pass) return;
+
+            const submitBtn = document.getElementById('btn-submit-login');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Verificando...';
+
+            try {
+                if (!ENCRYPTED_TOKEN_PAYLOAD) {
+                    // Si aún no se ha configurado el payload en el archivo
+                    showToast('El administrador debe configurar primero el token con la opción inferior.', 'warning');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🔓 Entrar al Gestor';
+                    return;
+                }
+
+                // Desciframos el token con la contraseña en la memoria RAM
+                const token = await decryptToken(ENCRYPTED_TOKEN_PAYLOAD, pass);
+                
+                // Probamos conexión con la API de GitHub
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) {
+                    throw new Error("El token de GitHub configurado no es válido o no tiene permisos.");
+                }
+
+                // Guardado SOLO en RAM
+                sessionToken = token;
+                passwordInput.value = '';
+
+                document.getElementById('screen-login').classList.add('hidden');
+                document.getElementById('screen-explorer').classList.remove('hidden');
+                document.getElementById('btn-logout').classList.remove('hidden');
+
+                showToast('¡Bienvenido! Sesión iniciada correctamente.', 'success');
+                loadDirectory('');
+
+            } catch (err) {
+                showToast(err.message || 'Contraseña incorrecta', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🔓 Entrar al Gestor';
+            }
+        }
+
+        function handleLogout() {
+            sessionToken = null; // Vaciamos inmediatamente de la memoria RAM
+            currentPath = '';
+            directoryItems = [];
+            document.getElementById('screen-explorer').classList.add('hidden');
+            document.getElementById('screen-editor').classList.add('hidden');
+            document.getElementById('btn-logout').classList.add('hidden');
+            document.getElementById('screen-login').classList.remove('hidden');
+            showToast('Sesión cerrada. La memoria se ha vaciado.', 'success');
+        }
+
+        function showSetupScreen() {
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-setup').classList.remove('hidden');
+        }
+
+        function hideSetupScreen() {
+            document.getElementById('screen-setup').classList.add('hidden');
+            document.getElementById('screen-login').classList.remove('hidden');
+        }
+
+        async function generateEncryptedPayload() {
+            const token = document.getElementById('setup-token').value.trim();
+            const pass = document.getElementById('setup-pass').value.trim();
+            if (!token || !pass) {
+                alert('Por favor, rellena el token de GitHub y la contraseña.');
+                return;
+            }
+
+            try {
+                const payload = await encryptToken(token, pass);
+                document.getElementById('setup-output').value = payload;
+                document.getElementById('setup-result').classList.remove('hidden');
+                
+                // Actualizamos también la variable en caliente para probar al instante
+                ENCRYPTED_TOKEN_PAYLOAD = payload;
+                showToast('¡Clave generada! Recuerda guardarla en gestor.html.', 'success');
+            } catch (err) {
+                showToast('Error generando cifrado: ' + err.message, 'error');
+            }
+        }
+
+        function copySetupPayload() {
+            const text = document.getElementById('setup-output').value;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('¡Copiado al portapapeles!', 'success');
+            });
+        }
+
+        async function savePayloadDirectlyToGitHub() {
+            const token = document.getElementById('setup-token').value.trim();
+            const payload = document.getElementById('setup-output').value.trim();
+            const btn = document.getElementById('btn-save-auto-payload');
+
+            if (!token || !payload) {
+                alert('Genera primero la clave cifrada.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Guardando en GitHub...';
+
+            try {
+                // 1. Obtenemos gestor.html desde GitHub
+                const getUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/gestor.html?ref=${REPO_BRANCH}`;
+                const getRes = await fetch(getUrl, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+
+                if (!getRes.ok) throw new Error('No se pudo leer gestor.html desde GitHub (asegúrate de haber hecho git push antes).');
+                const getData = await getRes.json();
+                const content = decodeBase64Utf8(getData.content);
+
+                // 2. Reemplazamos la variable ENCRYPTED_TOKEN_PAYLOAD
+                const regex = /let\s+ENCRYPTED_TOKEN_PAYLOAD\s*=\s*['"][^'"]*['"];/;
+                if (!regex.test(content)) {
+                    throw new Error('No se encontró la variable ENCRYPTED_TOKEN_PAYLOAD en el archivo.');
+                }
+                const updatedContent = content.replace(regex, `let ENCRYPTED_TOKEN_PAYLOAD = '${payload}';`);
+
+                // 3. Enviamos PUT
+                const putRes = await fetch(getUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Configurar clave cifrada en gestor.html',
+                        content: encodeBase64Utf8(updatedContent),
+                        sha: getData.sha,
+                        branch: REPO_BRANCH
+                    })
+                });
+
+                if (!putRes.ok) {
+                    const errJson = await putRes.json();
+                    throw new Error(errJson.message || 'Error guardando en GitHub');
+                }
+
+                ENCRYPTED_TOKEN_PAYLOAD = payload;
+                showToast('✅ ¡Guardado y activado en GitHub! Ya puedes entrar con tu contraseña.', 'success');
+                hideSetupScreen();
+
+            } catch (err) {
+                showToast('Error: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🚀 Guardar y Activar Automáticamente en GitHub';
+            }
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           EXPLORADOR DE ARCHIVOS (GITHUB CONTENTS API)
+           ══════════════════════════════════════════════════════════════════ */
+        async function loadDirectory(path) {
+            currentPath = path;
+            renderBreadcrumbs(path);
+
+            const tbody = document.getElementById('file-table-body');
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted);">Cargando archivos desde GitHub...</td></tr>`;
+
+            try {
+                const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${REPO_BRANCH}`;
+                const res = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${sessionToken}`,
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+
+                if (!res.ok) throw new Error('Error al listar archivos: ' + res.statusText);
+                const items = await res.json();
+
+                // Ordenamos: primero carpetas, luego archivos alfabéticamente
+                items.sort((a, b) => {
+                    if (a.type === b.type) return a.name.localeCompare(b.name);
+                    return a.type === 'dir' ? -1 : 1;
+                });
+
+                directoryItems = items;
+                renderFileList(items);
+
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--danger);">${err.message}</td></tr>`;
+                showToast(err.message, 'error');
+            }
+        }
+
+        function renderBreadcrumbs(path) {
+            const container = document.getElementById('explorer-breadcrumbs');
+            container.innerHTML = '';
+
+            const homeSpan = document.createElement('span');
+            homeSpan.className = `breadcrumb-item ${!path ? 'active' : ''}`;
+            homeSpan.innerHTML = '📁 Inicio';
+            if (path) homeSpan.onclick = () => loadDirectory('');
+            container.appendChild(homeSpan);
+
+            if (!path) return;
+
+            const parts = path.split('/').filter(Boolean);
+            let accum = '';
+            parts.forEach((part, index) => {
+                accum += (accum ? '/' : '') + part;
+                const isLast = index === parts.length - 1;
+
+                const sep = document.createElement('span');
+                sep.textContent = '/';
+                container.appendChild(sep);
+
+                const item = document.createElement('span');
+                item.className = `breadcrumb-item ${isLast ? 'active' : ''}`;
+                item.textContent = part;
+                const targetPath = accum;
+                if (!isLast) item.onclick = () => loadDirectory(targetPath);
+                container.appendChild(item);
+            });
+        }
+
+        function renderFileList(items) {
+            const tbody = document.getElementById('file-table-body');
+            tbody.innerHTML = '';
+
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted);">Esta carpeta está vacía.</td></tr>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const tr = document.createElement('tr');
+                const isDir = item.type === 'dir';
+                const ext = item.name.split('.').pop().toLowerCase();
+
+                let icon = '📄';
+                let badgeClass = 'badge-type';
+                let badgeText = ext.toUpperCase();
+
+                if (isDir) {
+                    icon = '📁';
+                    badgeClass += ' badge-folder';
+                    badgeText = 'CARPETA';
+                } else if (['html', 'htm'].includes(ext)) {
+                    icon = '🌐';
+                    badgeClass += ' badge-html';
+                } else if (['css'].includes(ext)) {
+                    icon = '🎨';
+                    badgeClass += ' badge-css';
+                } else if (['js'].includes(ext)) {
+                    icon = '⚡';
+                    badgeClass += ' badge-js';
+                } else if (['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg'].includes(ext)) {
+                    icon = '🖼️';
+                    badgeClass += ' badge-image';
+                }
+
+                // Nombre
+                const tdName = document.createElement('td');
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'file-name-cell';
+                nameDiv.innerHTML = `<span class="file-icon">${icon}</span><span>${item.name}</span>`;
+                if (isDir) {
+                    nameDiv.onclick = () => loadDirectory(item.path);
+                } else {
+                    nameDiv.onclick = () => openFile(item);
+                }
+                tdName.appendChild(nameDiv);
+
+                // Tipo
+                const tdType = document.createElement('td');
+                tdType.innerHTML = `<span class="${badgeClass}">${badgeText}</span>`;
+
+                // Tamaño
+                const tdSize = document.createElement('td');
+                tdSize.textContent = isDir ? '—' : formatFileSize(item.size);
+
+                // Acciones
+                const tdActions = document.createElement('td');
+                tdActions.style.textAlign = 'right';
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'table-actions';
+                actionsDiv.style.justifyContent = 'flex-end';
+
+                if (isDir) {
+                    actionsDiv.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadDirectory('${item.path}')">Abrir 📂</button>`;
+                } else {
+                    actionsDiv.innerHTML = `
+                        <button class="btn btn-primary btn-sm" onclick="openFileByPath('${item.path}')">✏️ Editar</button>
+                        <a href="${item.name}" target="_blank" class="btn btn-secondary btn-sm">👁️ Ver</a>
+                    `;
+                }
+                tdActions.appendChild(actionsDiv);
+
+                tr.appendChild(tdName);
+                tr.appendChild(tdType);
+                tr.appendChild(tdSize);
+                tr.appendChild(tdActions);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterFiles() {
+            const query = document.getElementById('file-search-input').value.toLowerCase().trim();
+            if (!query) {
+                renderFileList(directoryItems);
+                return;
+            }
+            const filtered = directoryItems.filter(i => i.name.toLowerCase().includes(query));
+            renderFileList(filtered);
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes || bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           EDITOR DE ARCHIVOS (VISUAL, LAUDATE MARIAM Y CÓDIGO)
+           ══════════════════════════════════════════════════════════════════ */
+        function openFileByPath(path) {
+            const item = directoryItems.find(i => i.path === path);
+            if (item) openFile(item);
+        }
+
+        async function openFile(item) {
+            try {
+                showToast(`Cargando ${item.name}...`, 'info');
+
+                const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${item.path}?ref=${REPO_BRANCH}`;
+                const res = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${sessionToken}`,
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+
+                if (!res.ok) throw new Error('Error al abrir el archivo: ' + res.statusText);
+                const data = await res.json();
+
+                // Decodificar Base64 UTF-8 correctamente
+                const rawContent = decodeBase64Utf8(data.content);
+
+                currentFile = {
+                    path: item.path,
+                    name: item.name,
+                    sha: data.sha,
+                    fullHtml: rawContent,
+                    isHtml: item.name.toLowerCase().endsWith('.html'),
+                    isLaudate: item.name.toLowerCase() === 'grupo-laudate-mariam.html',
+                    hasUnsavedChanges: false
+                };
+
+                setupEditorInterface();
+
+            } catch (err) {
+                showToast('Error abriendo archivo: ' + err.message, 'error');
+            }
+        }
+
+        function setupEditorInterface() {
+            document.getElementById('screen-explorer').classList.add('hidden');
+            document.getElementById('screen-editor').classList.remove('hidden');
+
+            document.getElementById('editor-file-name').textContent = currentFile.name;
+            document.getElementById('editor-unsaved').classList.add('hidden');
+
+            // Configuramos pestañas
+            const tabsBar = document.getElementById('editor-tabs-bar');
+            tabsBar.innerHTML = '';
+
+            // Si es grupo-laudate-mariam.html: Pestaña especial de Lista
+            if (currentFile.isLaudate) {
+                tabsBar.innerHTML += `
+                    <button class="tab-btn active" id="tab-btn-laudate" onclick="switchEditorTab('laudate')">
+                        📋 Lista Laudate Mariam
+                    </button>
+                    <button class="tab-btn" id="tab-btn-visual" onclick="switchEditorTab('visual')">
+                        📝 Editor Visual
+                    </button>
+                    <button class="tab-btn" id="tab-btn-code" onclick="switchEditorTab('code')">
+                        💻 Código HTML
+                    </button>
+                    <button class="tab-btn" id="tab-btn-preview" onclick="switchEditorTab('preview')">
+                        👁️ Vista Previa
+                    </button>
+                `;
+                parseLaudateMariamList(currentFile.fullHtml);
+                switchEditorTab('laudate');
+
+            } else if (currentFile.isHtml) {
+                // Cualquier otro HTML
+                tabsBar.innerHTML += `
+                    <button class="tab-btn active" id="tab-btn-visual" onclick="switchEditorTab('visual')">
+                        📝 Editor Visual
+                    </button>
+                    <button class="tab-btn" id="tab-btn-code" onclick="switchEditorTab('code')">
+                        💻 Código HTML
+                    </button>
+                    <button class="tab-btn" id="tab-btn-preview" onclick="switchEditorTab('preview')">
+                        👁️ Vista Previa
+                    </button>
+                `;
+                extractPageWrapper(currentFile.fullHtml);
+                switchEditorTab('visual');
+
+            } else {
+                // CSS, JS, TXT
+                tabsBar.innerHTML += `
+                    <button class="tab-btn active" id="tab-btn-code" onclick="switchEditorTab('code')">
+                        💻 Código Fuente
+                    </button>
+                `;
+                switchEditorTab('code');
+            }
+
+            // Poblamos el editor de código con todo el texto original
+            document.getElementById('code-textarea').value = currentFile.fullHtml;
+        }
+
+        function switchEditorTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`tab-btn-${tab}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Ocultamos todas las vistas
+            document.getElementById('view-laudate').classList.add('hidden');
+            document.getElementById('view-visual').classList.add('hidden');
+            document.getElementById('view-code').classList.add('hidden');
+            document.getElementById('view-preview').classList.add('hidden');
+
+            if (tab === 'laudate') {
+                document.getElementById('view-laudate').classList.remove('hidden');
+            } else if (tab === 'visual') {
+                document.getElementById('view-visual').classList.remove('hidden');
+            } else if (tab === 'code') {
+                document.getElementById('view-code').classList.remove('hidden');
+            } else if (tab === 'preview') {
+                document.getElementById('view-preview').classList.remove('hidden');
+                updatePreviewFrame();
+            }
+        }
+
+        function extractPageWrapper(html) {
+            // Buscamos <article class="page-wrapper"> o <main
+            const startTag = '<article class="page-wrapper">';
+            const endTag = '</article>';
+            const sIdx = html.indexOf(startTag);
+            const eIdx = html.indexOf(endTag, sIdx);
+
+            if (sIdx !== -1 && eIdx !== -1) {
+                currentFile.pageWrapperStart = sIdx + startTag.length;
+                currentFile.pageWrapperEnd = eIdx;
+                const inner = html.substring(currentFile.pageWrapperStart, currentFile.pageWrapperEnd);
+                document.getElementById('visual-editor-content').innerHTML = inner;
+            } else {
+                // Fallback: mostrar todo el cuerpo
+                document.getElementById('visual-editor-content').innerHTML = html;
+            }
+        }
+
+        function updatePreviewFrame() {
+            const previewDoc = document.getElementById('preview-frame').contentDocument;
+            previewDoc.open();
+            previewDoc.write(buildUpdatedFullHtml());
+            previewDoc.close();
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           PARSER Y GESTIÓN ESPECIAL DE LA LISTA LAUDATE MARIAM
+           ══════════════════════════════════════════════════════════════════ */
+        function parseLaudateMariamList(html) {
+            laudateList = [];
+            const olStart = html.indexOf('<ol>');
+            const olEnd = html.indexOf('</ol>');
+            if (olStart === -1 || olEnd === -1) return;
+
+            const olContent = html.substring(olStart + 4, olEnd);
+            const regex = /<li>(.*?)<\/li>/gi;
+            let match;
+
+            while ((match = regex.exec(olContent)) !== null) {
+                const rawText = match[1].trim();
+                // Formato estándar: Nombre (Lugar). Detalle
+                let name = rawText;
+                let place = '';
+                let status = '';
+
+                const parenStart = rawText.indexOf('(');
+                const parenEnd = rawText.indexOf(')', parenStart);
+
+                if (parenStart !== -1 && parenEnd !== -1) {
+                    name = rawText.substring(0, parenStart).trim();
+                    place = rawText.substring(parenStart + 1, parenEnd).trim();
+                    status = rawText.substring(parenEnd + 1).replace(/^[\.\s]+/, '').trim();
+                }
+
+                laudateList.push({ raw: rawText, name, place, status });
+            }
+
+            renderLaudateList(laudateList);
+        }
+
+        function renderLaudateList(items) {
+            const container = document.getElementById('laudate-items-container');
+            container.innerHTML = '';
+            document.getElementById('laudate-total-count').textContent = `Total: ${items.length} miembros comprometidos`;
+
+            if (items.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No se encontraron miembros.</div>`;
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'laudate-item';
+
+                div.innerHTML = `
+                    <span class="laudate-item-num">${index + 1}.</span>
+                    <div class="laudate-item-text">
+                        <strong>${escapeHtml(item.name || item.raw)}</strong>
+                        ${item.place ? `<span style="color: var(--text-muted);"> (${escapeHtml(item.place)})</span>` : ''}
+                        ${item.status ? `<div style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(item.status)}</div>` : ''}
+                    </div>
+                    <div style="display: flex; gap: 0.35rem;">
+                        <button class="btn btn-secondary btn-sm" onclick="openEditLaudateModal(${index})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteLaudateItem(${index})">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function filterLaudateItems() {
+            const q = document.getElementById('laudate-search-input').value.toLowerCase().trim();
+            if (!q) {
+                renderLaudateList(laudateList);
+                return;
+            }
+            const filtered = laudateList.filter(item => 
+                (item.name && item.name.toLowerCase().includes(q)) ||
+                (item.place && item.place.toLowerCase().includes(q)) ||
+                (item.raw && item.raw.toLowerCase().includes(q))
+            );
+            renderLaudateList(filtered);
+        }
+
+        function openAddLaudateModal() {
+            document.getElementById('modal-laudate-title').textContent = '➕ Añadir Nueva Persona';
+            document.getElementById('laudate-edit-index').value = '-1';
+            document.getElementById('laudate-field-name').value = '';
+            document.getElementById('laudate-field-place').value = '';
+            document.getElementById('laudate-field-status').value = 'Renovó el compromiso en mayo 2026';
+            document.getElementById('modal-laudate').classList.remove('hidden');
+        }
+
+        function openEditLaudateModal(index) {
+            const item = laudateList[index];
+            document.getElementById('modal-laudate-title').textContent = '✏️ Editar Persona';
+            document.getElementById('laudate-edit-index').value = index;
+            document.getElementById('laudate-field-name').value = item.name || '';
+            document.getElementById('laudate-field-place').value = item.place || '';
+            document.getElementById('laudate-field-status').value = item.status || '';
+            document.getElementById('modal-laudate').classList.remove('hidden');
+        }
+
+        function closeLaudateModal() {
+            document.getElementById('modal-laudate').classList.add('hidden');
+        }
+
+        function handleSaveLaudateItem(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('laudate-edit-index').value);
+            const name = document.getElementById('laudate-field-name').value.trim();
+            const place = document.getElementById('laudate-field-place').value.trim();
+            const status = document.getElementById('laudate-field-status').value.trim();
+
+            const rawText = `${name} (${place}). ${status}`;
+            const newItem = { raw: rawText, name, place, status };
+
+            if (index >= 0) {
+                laudateList[index] = newItem;
+                showToast('Miembro actualizado correctamente.', 'success');
+            } else {
+                laudateList.push(newItem);
+                showToast('Miembro añadido al final de la lista.', 'success');
+            }
+
+            closeLaudateModal();
+            renderLaudateList(laudateList);
+            markUnsaved();
+        }
+
+        function deleteLaudateItem(index) {
+            if (confirm(`¿Eliminar a "${laudateList[index].name || laudateList[index].raw}" de la lista?`)) {
+                laudateList.splice(index, 1);
+                renderLaudateList(laudateList);
+                markUnsaved();
+                showToast('Miembro eliminado de la lista.', 'info');
+            }
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           GUARDADO Y PUBLICACIÓN DIRECTA EN GITHUB VIA API
+           ══════════════════════════════════════════════════════════════════ */
+        function buildUpdatedFullHtml() {
+            if (currentFile.isLaudate) {
+                // Reconstruimos la sección <ol>...</ol>
+                const olStart = currentFile.fullHtml.indexOf('<ol>');
+                const olEnd = currentFile.fullHtml.indexOf('</ol>');
+                if (olStart !== -1 && olEnd !== -1) {
+                    let olItemsHtml = '\n';
+                    laudateList.forEach(item => {
+                        olItemsHtml += `<li>${item.raw}</li>\n`;
+                    });
+                    const before = currentFile.fullHtml.substring(0, olStart + 4);
+                    const after = currentFile.fullHtml.substring(olEnd);
+                    return before + olItemsHtml + after;
+                }
+            } else if (currentFile.isHtml && currentFile.pageWrapperStart !== -1) {
+                // Reemplazamos únicamente el contenido del <article class="page-wrapper">
+                const visualContent = document.getElementById('visual-editor-content').innerHTML;
+                const before = currentFile.fullHtml.substring(0, currentFile.pageWrapperStart);
+                const after = currentFile.fullHtml.substring(currentFile.pageWrapperEnd);
+                return before + visualContent + after;
+            }
+
+            // Fallback o archivos no-HTML: lo que esté en el textarea de código
+            return document.getElementById('code-textarea').value;
+        }
+
+        async function saveCurrentFile() {
+            const saveBtn = document.getElementById('btn-save-file');
+            saveBtn.disabled = true;
+            saveBtn.textContent = '🚀 Publicando en GitHub...';
+
+            try {
+                // Construimos el HTML completo actualizado
+                const finalContent = buildUpdatedFullHtml();
+
+                // 1. Obtenemos el SHA más reciente para evitar conflictos de Git
+                const checkUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${currentFile.path}?ref=${REPO_BRANCH}`;
+                const checkRes = await fetch(checkUrl, {
+                    headers: {
+                        'Authorization': `Bearer ${sessionToken}`,
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+                
+                let sha = currentFile.sha;
+                if (checkRes.ok) {
+                    const checkData = await checkRes.json();
+                    sha = checkData.sha;
+                }
+
+                // 2. Codificamos a Base64 UTF-8
+                const base64Content = encodeBase64Utf8(finalContent);
+
+                // 3. Enviamos PUT a la API de GitHub
+                const putUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${currentFile.path}`;
+                const putRes = await fetch(putUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${sessionToken}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Actualizado ${currentFile.name} desde Gestor Web`,
+                        content: base64Content,
+                        sha: sha,
+                        branch: REPO_BRANCH
+                    })
+                });
+
+                if (!putRes.ok) {
+                    const errData = await putRes.json();
+                    throw new Error(errData.message || 'Error guardando en GitHub');
+                }
+
+                const resData = await putRes.json();
+                currentFile.sha = resData.content ? resData.content.sha : sha;
+                currentFile.fullHtml = finalContent;
+                currentFile.hasUnsavedChanges = false;
+                document.getElementById('editor-unsaved').classList.add('hidden');
+
+                showToast('✅ ¡Guardado y publicado con éxito! En 1 minuto estará en obradeamor.net', 'success');
+
+            } catch (err) {
+                showToast('Error al guardar: ' + err.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 Guardar y Publicar';
+            }
+        }
+
+        function closeEditor() {
+            if (currentFile.hasUnsavedChanges) {
+                if (!confirm('Hay cambios sin guardar. ¿Seguro que quieres salir?')) return;
+            }
+            document.getElementById('screen-editor').classList.add('hidden');
+            document.getElementById('screen-explorer').classList.remove('hidden');
+            loadDirectory(currentPath);
+        }
+
+        function markUnsaved() {
+            currentFile.hasUnsavedChanges = true;
+            document.getElementById('editor-unsaved').classList.remove('hidden');
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           COMANDOS Y UTILIDADES DE FORMATO VISUAL
+           ══════════════════════════════════════════════════════════════════ */
+        function execCmd(command, value = null) {
+            document.execCommand(command, false, value);
+            markUnsaved();
+        }
+
+        function promptLink() {
+            const url = prompt('Introduce la URL del enlace:', 'https://');
+            if (url) execCmd('createLink', url);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        function encodeBase64Utf8(str) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+        }
+
+        function decodeBase64Utf8(base64) {
+            const clean = base64.replace(/\s/g, '');
+            return decodeURIComponent(atob(clean).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function goToHome() {
+            if (!sessionToken) return;
+            if (currentFile.hasUnsavedChanges) {
+                if (!confirm('Hay cambios sin guardar. ¿Volver al inicio?')) return;
+            }
+            document.getElementById('screen-editor').classList.add('hidden');
+            document.getElementById('screen-explorer').classList.remove('hidden');
+            loadDirectory('');
+        }
+    </script>
+</body>
+</html>
