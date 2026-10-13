@@ -202,7 +202,7 @@
             margin: 0 auto;
         }
 
-        /* ─── LOGIN & SETUP SCREENS ─── */
+        /* ─── PANTALLA DE ACCESO ─── */
         .auth-container {
             min-height: calc(80vh - 80px);
             display: flex;
@@ -757,7 +757,7 @@
             </div>
         </div>
 
-        <!-- 3. EXPLORADOR DE ARCHIVOS (ESTILO TINYFILEMANAGER) -->
+        <!-- 2. EXPLORADOR DE ARCHIVOS (ESTILO TINYFILEMANAGER) -->
         <div id="screen-explorer" class="hidden">
             <div class="explorer-card">
                 <div class="explorer-toolbar">
@@ -794,7 +794,7 @@
             </div>
         </div>
 
-        <!-- 4. PANTALLA DEL EDITOR (VISUAL / LISTA LAUDATE / CÓDIGO) -->
+        <!-- 3. PANTALLA DEL EDITOR (VISUAL / LISTA LAUDATE / CÓDIGO) -->
         <div id="screen-editor" class="hidden">
             <div class="editor-container">
                 <div class="editor-header">
@@ -927,9 +927,8 @@
         const REPO_NAME = 'obra-de-amor';
         const REPO_BRANCH = 'main';
 
-        // PAYLOAD CIFRADO DEL TOKEN (Generado desde el asistente con la contraseña del usuario)
-        // El token se descifra con AES-GCM únicamente en la memoria RAM tras escribir la contraseña.
-        let ENCRYPTED_TOKEN_PAYLOAD = 'DZxusDp+c+6qB0STI3jwuEK49KZiT9X/pTt3robQWLRsWl3OlAL+kMLDy43/yZGEJziE4IqeArXtsoSoqEets6jyaV6dVTX2x2mlx32zFt0MdouxBo3YLKNjWAOOxPS/gvn7i9xp/Gz/kNza/jQ/PD7WiT2YjMEvQFAkt0+6lk1cOCYYb/tgSFU=';
+        // Token de GitHub cifrado con AES-GCM (se descifra en memoria RAM temporal solo al escribir la contraseña)
+        const ENCRYPTED_TOKEN_PAYLOAD = 'DZxusDp+c+6qB0STI3jwuEK49KZiT9X/pTt3robQWLRsWl3OlAL+kMLDy43/yZGEJziE4IqeArXtsoSoqEets6jyaV6dVTX2x2mlx32zFt0MdouxBo3YLKNjWAOOxPS/gvn7i9xp/Gz/kNza/jQ/PD7WiT2YjMEvQFAkt0+6lk1cOCYYb/tgSFU=';
 
         /* ══════════════════════════════════════════════════════════════════
            ESTADO EN MEMORIA TEMPORAL (NO SE GUARDA EN LOCALSTORAGE)
@@ -1014,14 +1013,6 @@
             submitBtn.textContent = 'Verificando...';
 
             try {
-                if (!ENCRYPTED_TOKEN_PAYLOAD) {
-                    // Si aún no se ha configurado el payload en el archivo
-                    showToast('El administrador debe configurar primero el token con la opción inferior.', 'warning');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '🔓 Entrar al Gestor';
-                    return;
-                }
-
                 // Desciframos el token con la contraseña en la memoria RAM
                 const token = await decryptToken(ENCRYPTED_TOKEN_PAYLOAD, pass);
                 
