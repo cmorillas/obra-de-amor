@@ -45,11 +45,17 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         body {
             font-family: var(--font-body);
             background-color: var(--bg-page);
             color: var(--text-main);
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             line-height: 1.5;
@@ -57,14 +63,13 @@
 
         /* ─── HEADER / NAVBAR ─── */
         header.app-header {
+            flex-shrink: 0;
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
             z-index: 50;
             box-shadow: 0 1px 4px rgba(0,0,0,0.03);
         }
@@ -196,23 +201,45 @@
         /* ─── MAIN CONTENT ─── */
         main.app-main {
             flex: 1;
-            padding: 0.5rem 0.75rem 0.75rem;
+            min-height: 0;
+            padding: 0.4rem 0.75rem 0.5rem;
             max-width: 100%;
             width: 100%;
             margin: 0;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            min-height: calc(100vh - 65px);
+            overflow: hidden;
+        }
+
+        #screen-explorer {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 0.5rem;
+        }
+
+        #screen-editor {
+            flex: 1;
+            min-height: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         /* ─── PANTALLA DE ACCESO ─── */
         .auth-container {
-            min-height: calc(80vh - 80px);
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            overflow-y: auto;
         }
 
         .auth-card {
@@ -451,8 +478,8 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            height: calc(100vh - 78px);
-            min-height: calc(100vh - 78px);
+            height: 100%;
+            min-height: 0;
             overflow: hidden;
         }
 
@@ -1528,10 +1555,9 @@
             background-image: url('../assets/images/celeste2.jpg');
             background-repeat: repeat;
             margin: 0;
-            padding: 1.25rem 1.5rem 3rem;
+            padding: 1.25rem 1.5rem 2.5rem;
             color: var(--gray-700, #334155);
             font-family: var(--font-body, system-ui, sans-serif);
-            min-height: 100vh;
             box-sizing: border-box;
         }
         .page-wrapper {
@@ -1544,7 +1570,7 @@
             width: 100%;
             margin: 0 auto;
             outline: none;
-            min-height: calc(100vh - 4.5rem);
+            min-height: 400px;
             box-sizing: border-box;
         }
         .page-wrapper:focus {
